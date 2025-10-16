@@ -1,0 +1,77 @@
+nohup: ignoring input
+✓ photo2pixel_api 加载成功 (三个方法: pixel_effect, pixel_segment, edge_enhance)
+✓ OpenCV 背景去除功能加载成功
+ * Serving Flask app 'api'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.17.9.130:5001
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 193-664-328
+127.0.0.1 - - [13/Oct/2025 22:17:28] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [13/Oct/2025 22:17:30] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [13/Oct/2025 22:18:54] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [13/Oct/2025 22:18:54] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:18:54] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [13/Oct/2025 22:22:53] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [13/Oct/2025 22:22:57] "POST /login HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:24:48] "POST /login HTTP/1.1" 302 -
+127.0.0.1 - - [13/Oct/2025 22:24:48] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:27:18] "POST /api/process-step1 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:27:18] "GET /file?p=temp_processing/20251013222714206490_step1.png&t=1760365638024 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:27:18] "GET /file?p=temp_processing/20251013222714206490_step1.png&t=1760365638025 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:14] "POST /api/process-step2?_t=1760365693539 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:14] "POST /api/process-step3 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:14] "GET /file?p=outputs/20251013222714206490_draft_pixel_display.png&t=1760365694637 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:14] "GET /file?p=outputs/20251013222714206490_draft_board.png&t=1760365694637 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:14] "GET /file?p=outputs/20251013222714206490_draft_pixel_display.png&t=1760365694639 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:14] "GET /file?p=outputs/20251013222714206490_draft_board.png&t=1760365694639 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:18] "GET /file?p=temp_processing/20251013222714206490_step1.png&t=1760365698319 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:25] "POST /api/process-step2?_t=1760365704101 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:25] "POST /api/process-step3 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:25] "GET /file?p=outputs/20251013222714206490_draft_pixel_display.png&t=1760365705486 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:25] "GET /file?p=outputs/20251013222714206490_draft_pixel_display.png&t=1760365705485 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:25] "GET /file?p=outputs/20251013222714206490_draft_board.png&t=1760365705485 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:25] "GET /file?p=outputs/20251013222714206490_draft_board.png&t=1760365705486 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:30] "GET /file?p=temp_processing/20251013222714206490_step1.png&t=1760365710258 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:35] "POST /api/process-step2?_t=1760365714081 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:35] "POST /api/process-step3 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:35] "GET /file?p=outputs/20251013222714206490_draft_pixel_display.png&t=1760365715596 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:35] "GET /file?p=outputs/20251013222714206490_draft_board.png&t=1760365715596 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:35] "GET /file?p=outputs/20251013222714206490_draft_board.png&t=1760365715597 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:35] "GET /file?p=outputs/20251013222714206490_draft_pixel_display.png&t=1760365715597 HTTP/1.1" 200 -
+127.0.0.1 - - [13/Oct/2025 22:28:43] "GET /file?p=temp_processing/20251013222714206490_step1.png&t=1760365723176 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 00:57:09] "POST /api/process-step2?_t=1760365742321 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 01:01:37] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 01:01:37] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 01:02:25] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 01:21:09] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 01:21:11] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 01:21:12] "GET /robots.txt HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 01:21:13] "GET /sitemap.xml HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 01:21:14] "GET /.well-known/security.txt HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 01:21:19] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 01:22:20] "GET /actuator/health HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 02:29:20] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:29:24] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 02:29:26] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 02:29:51] "GET /robots.txt HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 02:30:35] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:37:04] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:39:23] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:44:35] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:57:37] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:59:10] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 02:59:10] "GET /login HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 03:01:31] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 03:10:11] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 03:20:13] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 03:21:04] "GET /json/?0.5144318927723352098904 HTTP/1.1" 404 -
+127.0.0.1 - - [14/Oct/2025 03:28:37] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 03:31:46] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 03:39:48] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 03:45:07] "GET / HTTP/1.1" 302 -
+127.0.0.1 - - [14/Oct/2025 03:45:57] "GET /login HTTP/1.1" 200 -

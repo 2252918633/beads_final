@@ -1,0 +1,11 @@
+Flask==2.3.0
+Pillow==10.0.0
+numpy==1.24.3
+werkzeug==2.3.0
+scikit-learn==1.3.0
+torch==2.0.1
+torchvision==0.15.2
+gunicorn==21.2.0
+opencv-python-headless
+pymysql==1.1.0        # 新增
+cryptography==41.0.7   # 新增（PyMySQL 依赖）

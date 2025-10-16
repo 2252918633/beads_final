@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>拼豆图纸 - 生成结果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .image-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .image-box {
+            text-align: center;
+            max-width: 100%;
+            /* 从 600px 改为 100%，充分利用空间 */
+            /* 限制最大宽度 */
+            margin: 0 auto;
+            /* 居中 */
+        }
+
+        .image-box img {
+            width: 100%;
+            /* ← 改这里！从 max-width 改为 width */
+            height: auto;
+            /* ← 添加这行，保持图片比例 */
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        /* 添加这个新的样式 */
+        .board-section {
+            max-width: 1800px !important;
+            /* 比container更宽 */
+            margin: 0 -2rem;
+            /* 负边距抵消container的padding */
+            padding: 2rem 2rem;
+            /* 重新添加内边距 */
+        }
+
+        .image-box h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 0.25rem;
+        }
+
+        .btn:hover {
+            background: #5568d3;
+        }
+
+        .color-stats {
+            margin-top: 2rem;
+        }
+
+        .color-stats h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .color-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .color-box {
+            width: 100%;
+            height: 50px;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            border: 1px solid #ddd;
+        }
+
+        .info-bar {
+            background: #f8f9ff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .info-item strong {
+            display: block;
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+                border-radius: 12px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 0.5rem;
+            }
+
+            .color-item {
+                padding: 0.5rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .image-box {
+                max-width: 100%;
+            }
+
+            .image-box img {
+                max-width: 100%;
+                /* max-height: 400px; ← 删除或注释掉这行 */
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                margin-bottom: 1rem;
+            }
+        }
+
+        #pixelCanvas {
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            max-width: 100%;
+            touch-action: manipulation;
+            /* ✅ 允许缩放但防止双击缩放 */
+        }
+
+        /* ✅ 为编辑模式添加特殊处理 */
+        .editing-mode #pixelCanvas {
+            touch-action: none;
+            /* 编辑时禁用所有触摸手势 */
+        }
+
+        /* 编辑器样式 */
+        #editorSection {
+            margin-top: 3rem;
+            border-top: 2px solid #eee;
+            padding-top: 2rem;
+        }
+
+        #pixelCanvas {
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            cursor: pointer;
+            max-width: 100%;
+            touch-action: none;
+        }
+
+        #colorPickerModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                padding: 1rem;
+                max-width: 95vw;
+                max-height: 90vh;
+            }
+        }
+
+        .color-picker-item {
+            cursor: pointer;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .color-picker-item:hover,
+        .color-picker-item:active {
+            border-color: #667eea;
+            transform: scale(1.05);
+        }
+
+        #colorGrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            #colorGrid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 0.5rem;
+            }
+
+            .color-picker-item {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎨 拼豆图纸生成完成</h1>
+
+        <div class="info-bar">
+            <div class="info-item">
+                <strong>{{ image_width }}×{{ image_height }}</strong>
+                <span>像素尺寸</span>
+            </div>
+            <div class="info-item">
+                <strong>{{ total_colors }}</strong>
+                <span>颜色种类</span>
+            </div>
+            <div class="info-item">
+                <strong>
+                    {% if algorithm == 'smart' %}智能聚类
+                    {% elif algorithm == 'none' %}不聚类
+                    {% else %}{{ algorithm }}
+                    {% endif %}
+                </strong>
+                <span>处理方式</span>
+            </div>
+        </div>
+
+        <div class="image-section board-section" style="grid-template-columns: 1fr; max-width: 100%; margin: 0 auto;">
+            <div class="image-box" style="max-width: 2400px; margin: 0 auto;">
+                <h3>🧩 拼豆图纸（带坐标和网格）</h3>
+                <img src="{{ board_url }}" alt="图纸" style="width: 100%; height: auto;">
+                <!-- 改为： -->
+                <div style="margin-top: 1rem;">
+                    <a href="{{ download_board }}" id="downloadBoardLink" class="btn"
+                        style="padding: 0.8rem 1.5rem; font-size: 1rem;">📥
+                        下载图纸</a>
+                </div>
+            </div>
+        </div>
+        <!-- 编辑器容器 -->
+        <div id="editorSection" style="margin-top: 3rem; border-top: 2px solid #eee; padding-top: 2rem;">
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <button id="toggleEditBtn" class="btn" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                    ✏️ 进入编辑模式
+                </button>
+            </div>
+
+            <div id="editorContainer" style="display: none;">
+                <h3 style="color: #667eea; text-align: center; margin-bottom: 1rem;">
+                    🎨 画笔模式：先选颜色，再点击像素块
+                </h3>
+
+                <!-- 画笔选择器 -->
+                <div
+                    style="background: #f8f9ff; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center;">
+                    <div
+                        style="display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                        <div style="font-weight: 600; color: #667eea;">当前画笔：</div>
+                        <div id="currentBrushDisplay"
+                            style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: white; border-radius: 8px; border: 2px solid #667eea;">
+                            <div id="brushColorBox"
+                                style="width: 40px; height: 40px; border-radius: 6px; border: 2px solid #ddd; background: #ccc;">
+                            </div>
+                            <div>
+                                <div id="brushColorName" style="font-weight: 600; font-size: 0.9rem;">请先选择颜色</div>
+                                <div id="brushColorCode" style="font-size: 0.75rem; color: #999;">-</div>
+                            </div>
+                        </div>
+                        <button id="chooseBrushBtn" class="btn" style="padding: 0.6rem 1.2rem;">
+                            🎨 选择画笔颜色
+                        </button>
+                        <button id="eraserBtn" class="btn"
+                            style="padding: 0.6rem 1.2rem; background: #e0e0e0; color: #333;" title="橡皮擦 (E)">
+                            🧹 橡皮擦
+                        </button>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button id="undoBtn" class="btn" style="padding: 0.6rem 1rem; background: #ffc107;" disabled
+                                title="撤回 (Ctrl+Z)">
+                                ↶ 撤回
+                            </button>
+                            <button id="redoBtn" class="btn" style="padding: 0.6rem 1rem; background: #17a2b8;" disabled
+                                title="重做 (Ctrl+Y)">
+                                ↷ 重做
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Canvas画布 -->
+                <div id="canvasContainer"
+                    style="margin-bottom: 2rem; width: 100%; border: 1px solid #eee; border-radius: 8px;">
+                    <canvas id="pixelCanvas"
+                        style="border: 2px solid #667eea; border-radius: 8px; cursor: crosshair; touch-action: none; display: block;"></canvas>
+                </div>
+                <div id="pixelInfo" style="margin-top: 0.5rem; color: #666; font-size: 0.9rem; text-align: center;">
+                    鼠标悬停查看像素信息 | 点击像素应用画笔颜色
+                </div>
+
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <button id="saveEditBtn" class="btn" style="padding: 0.8rem 1.5rem; background: #28a745;">
+                        💾 保存修改
+                    </button>
+                    <button id="cancelEditBtn" class="btn" style="padding: 0.8rem 1.5rem; background: #dc3545;">
+                        ❌ 取消编辑
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 颜色选择器模态框 -->
+        <div id="colorPickerModal">
+            <div class="modal-content">
+                <h3 style="color: #667eea; margin-bottom: 1rem; text-align: center;">
+                    🎨 选择画笔颜色
+                </h3>
+                <div id="selectedPixelInfo"
+                    style="text-align: center; margin-bottom: 1rem; padding: 0.5rem; background: #f8f9ff; border-radius: 8px;">
+                    选中位置: <span id="selectedPos"></span>
+                </div>
+
+                <!-- 搜索框 -->
+                <input type="text" id="colorSearch" placeholder="搜索颜色名称或色号..."
+                    style="width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+
+                <!-- 颜色网格 -->
+                <div id="colorGrid">
+                    <!-- 动态生成 -->
+                </div>
+
+                <div style="text-align: center;">
+                    <button id="closeColorPicker" class="btn" style="background: #999;">关闭</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            class PixelEditor {
+                constructor() {
+                    this.canvas = document.getElementById('pixelCanvas');
+                    this.canvasContainer = document.getElementById('canvasContainer');
+                    this.ctx = this.canvas.getContext('2d');
+                    this.pixelData = null;
+                    this.beadColors = [];
+                    this.width = 0;
+                    this.height = 0;
+                    this.pixelSize = 20;
+                    this.selectedPixel = null;
+                    this.originalData = null;
+                    this.currentBrush = null;
+                    this.isPainting = false;
+                    this.beadCodeStats = {};
+                    this.pixelToBeadCode = null;
+
+                    // 撤回/重做功能
+                    this.undoStack = [];
+                    this.redoStack = [];
+                    this.maxHistorySize = 50; // 最多保存50步历史
+
+                    // 橡皮擦功能
+                    this.isEraserMode = false;
+                    this.whiteBead = null; // 存储白色珠子信息
+
+                    this.initEventListeners();
+                }
+                toggleEditingMode(isEditing) {
+                    const canvas = document.getElementById('pixelCanvas');
+                    if (isEditing) {
+                        canvas.classList.add('editing-mode');
+                    } else {
+                        canvas.classList.remove('editing-mode');
+                    }
+                }
+
+                async loadData() {
+                    try {
+                        const response = await fetch('/api/get-pixel-data');
+                        const data = await response.json();
+
+                        if (data.success) {
+                            this.pixelData = data.pixel_data;
+                            this.originalData = JSON.parse(JSON.stringify(data.pixel_data));
+                            this.beadColors = data.bead_colors;
+                            this.width = data.width;
+                            this.height = data.height;
+
+                            // 查找白色珠子（用于橡皮擦）
+                            this.findWhiteBead();
+
+                            this.setupCanvas();
+                            this.drawPixels();
+                            this.buildColorPicker();
+                            this.initStatsFromPage();
+                            this.toggleEditingMode(true);
+                            this.updateUndoRedoButtons(); // 初始化撤回/重做按钮状态
+                        } else {
+                            alert('加载数据失败: ' + data.error);
+                        }
+                    } catch (error) {
+                        alert('加载数据出错: ' + error);
+                    }
+                }
+
+                initStatsFromPage() {
+                    const colorItems = document.querySelectorAll('.color-stats .color-item');
+                    this.beadCodeStats = {};
+
+                    colorItems.forEach(item => {
+                        const code = item.querySelector('div:nth-child(3)').textContent.trim();
+                        const name = item.querySelector('div:nth-child(2)').textContent.trim();
+                        const hex = item.querySelector('.color-box').style.backgroundColor;
+                        const countText = item.querySelector('div:nth-child(4)').textContent;
+                        const count = parseInt(countText.replace(/[^0-9]/g, ''));
+
+                        const rgbMatch = hex.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+                        let hexColor = hex;
+                        if (rgbMatch) {
+                            const r = parseInt(rgbMatch[1]);
+                            const g = parseInt(rgbMatch[2]);
+                            const b = parseInt(rgbMatch[3]);
+                            hexColor = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+                        }
+
+                        this.beadCodeStats[code] = {
+                            code: code,
+                            name: name,
+                            hex: hexColor,
+                            count: count
+                        };
+                    });
+
+                    this.pixelToBeadCode = Array(this.height).fill(null).map(() => Array(this.width).fill(null));
+
+                    for (let y = 0; y < this.height; y++) {
+                        for (let x = 0; x < this.width; x++) {
+                            const [r, g, b] = this.pixelData[y][x];
+                            const closestBead = this.findClosestBead(r, g, b);
+                            this.pixelToBeadCode[y][x] = closestBead.code;
+                        }
+                    }
+                }
+
+                setupCanvas() {
+                    // 如果容器不可见，使用默认宽度
+                    const containerWidth = this.canvasContainer.clientWidth || 800;
+                    const maxWidth = containerWidth - 20;
+                    this.pixelSize = Math.max(10, Math.min(40, Math.floor(maxWidth / this.width)));
+                    this.updateCanvasSize();
+                    this.drawPixels(); // 确保绘制
+                }
+
+                updateCanvasSize() {
+                    this.canvas.width = this.width * this.pixelSize;
+                    this.canvas.height = this.height * this.pixelSize;
+                }
+
+                drawPixels() {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+                    for (let y = 0; y < this.height; y++) {
+                        for (let x = 0; x < this.width; x++) {
+                            const [r, g, b] = this.pixelData[y][x];
+                            this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+                            this.ctx.fillRect(x * this.pixelSize, y * this.pixelSize, this.pixelSize, this.pixelSize);
+
+                            this.ctx.strokeStyle = '#ddd';
+                            this.ctx.lineWidth = 1;
+                            this.ctx.strokeRect(x * this.pixelSize, y * this.pixelSize, this.pixelSize, this.pixelSize);
+                        }
+                    }
+                }
+
+                buildColorPicker() {
+                    const grid = document.getElementById('colorGrid');
+                    grid.innerHTML = '';
+
+                    this.beadColors.forEach(color => {
+                        const item = document.createElement('div');
+                        item.className = 'color-picker-item';
+                        item.style.cssText = 'cursor: pointer; padding: 0.8rem; border: 2px solid #e0e0e0; border-radius: 8px; text-align: center; transition: all 0.2s;';
+                        item.innerHTML = `
+                            <div style="width: 60px; height: 60px; background: ${color.hex}; border-radius: 8px; margin: 0 auto 0.5rem; border: 1px solid #ddd;"></div>
+                            <div style="font-size: 0.85rem; font-weight: 600;">${color.name}</div>
+                            <div style="font-size: 0.75rem; color: #999;">${color.code}</div>
+                        `;
+
+                        item.onmouseenter = () => item.style.borderColor = '#667eea';
+                        item.onmouseleave = () => item.style.borderColor = '#e0e0e0';
+                        item.onclick = () => this.selectBrush(color);
+
+                        grid.appendChild(item);
+                    });
+                }
+
+                selectBrush(color) {
+                    this.currentBrush = color;
+                    this.isEraserMode = false;
+                    document.getElementById('brushColorBox').style.background = color.hex;
+                    document.getElementById('brushColorName').textContent = color.name;
+                    document.getElementById('brushColorCode').textContent = color.code;
+                    this.updateToolButtons();
+                    this.closeColorPicker();
+                }
+
+                // 查找白色珠子
+                findWhiteBead() {
+                    // 查找最接近白色的珠子
+                    let whitest = null;
+                    let maxBrightness = -1;
+
+                    for (const bead of this.beadColors) {
+                        const hex = bead.hex.replace('#', '');
+                        const r = parseInt(hex.substr(0, 2), 16);
+                        const g = parseInt(hex.substr(2, 2), 16);
+                        const b = parseInt(hex.substr(4, 2), 16);
+
+                        // 计算亮度
+                        const brightness = r + g + b;
+
+                        if (brightness > maxBrightness) {
+                            maxBrightness = brightness;
+                            whitest = bead;
+                        }
+                    }
+
+                    this.whiteBead = whitest;
+                }
+
+                // 启用橡皮擦模式
+                enableEraser() {
+                    if (!this.whiteBead) {
+                        alert('未找到白色珠子，无法使用橡皮擦！');
+                        return;
+                    }
+
+                    this.isEraserMode = true;
+                    this.currentBrush = this.whiteBead;
+
+                    document.getElementById('brushColorBox').style.background = this.whiteBead.hex;
+                    document.getElementById('brushColorName').textContent = '🧹 橡皮擦';
+                    document.getElementById('brushColorCode').textContent = this.whiteBead.code;
+
+                    this.updateToolButtons();
+                }
+
+                // 更新工具按钮状态
+                updateToolButtons() {
+                    const eraserBtn = document.getElementById('eraserBtn');
+                    const chooseBrushBtn = document.getElementById('chooseBrushBtn');
+
+                    if (this.isEraserMode) {
+                        eraserBtn.style.background = '#667eea';
+                        eraserBtn.style.color = 'white';
+                        chooseBrushBtn.style.opacity = '0.7';
+                    } else {
+                        eraserBtn.style.background = '#e0e0e0';
+                        eraserBtn.style.color = '#333';
+                        chooseBrushBtn.style.opacity = '1';
+                    }
+                }
+
+                getCanvasCoordinates(clientX, clientY) {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const scaleX = this.canvas.width / rect.width;
+                    const scaleY = this.canvas.height / rect.height;
+
+                    const canvasX = (clientX - rect.left) * scaleX;
+                    const canvasY = (clientY - rect.top) * scaleY;
+
+                    const x = Math.floor(canvasX / this.pixelSize);
+                    const y = Math.floor(canvasY / this.pixelSize);
+
+                    return { x, y };
+                }
+
+                paintPixel(x, y) {
+                    if (!this.currentBrush) {
+                        alert('请先选择画笔颜色！');
+                        return;
+                    }
+
+                    if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
+
+                    const oldCode = this.pixelToBeadCode[y][x];
+                    const newCode = this.currentBrush.code;
+
+                    if (oldCode === newCode) return;
+
+                    // 保存修改前的状态到撤回栈
+                    this.saveToHistory(x, y, oldCode, newCode);
+
+                    const hex = this.currentBrush.hex.replace('#', '');
+                    const r = parseInt(hex.substr(0, 2), 16);
+                    const g = parseInt(hex.substr(2, 2), 16);
+                    const b = parseInt(hex.substr(4, 2), 16);
+                    this.pixelData[y][x] = [r, g, b];
+
+                    this.pixelToBeadCode[y][x] = newCode;
+
+                    if (this.beadCodeStats[oldCode]) {
+                        this.beadCodeStats[oldCode].count--;
+                        if (this.beadCodeStats[oldCode].count === 0) {
+                            delete this.beadCodeStats[oldCode];
+                        }
+                    }
+
+                    if (this.beadCodeStats[newCode]) {
+                        this.beadCodeStats[newCode].count++;
+                    } else {
+                        this.beadCodeStats[newCode] = {
+                            code: this.currentBrush.code,
+                            name: this.currentBrush.name,
+                            hex: this.currentBrush.hex,
+                            count: 1
+                        };
+                    }
+
+                    this.drawPixels();
+                    this.updateStatsDisplay();
+                    this.updateUndoRedoButtons();
+                }
+
+                updateStatsDisplay() {
+                    const totalPixels = this.width * this.height;
+
+                    const stats = Object.values(this.beadCodeStats).map(item => ({
+                        ...item,
+                        percentage: ((item.count / totalPixels) * 100).toFixed(1) + '%'
+                    }));
+
+                    stats.sort((a, b) => b.count - a.count);
+
+                    const statsGrid = document.querySelector('.color-grid');
+                    statsGrid.innerHTML = stats.map(s => `
+                        <div class="color-item">
+                            <div class="color-box" style="background-color: ${s.hex};"></div>
+                            <div style="font-size: 0.85rem; color: #333; font-weight: 600; margin: 0.3rem 0;">${s.name}</div>
+                            <div style="font-size: 0.8rem; color: #999;">${s.code}</div>
+                            <div style="font-weight: bold; margin-top: 0.5rem; color: #667eea;">${s.count} 个</div>
+                            <div style="font-size: 0.8rem; color: #999;">占比 ${s.percentage}</div>
+                        </div>
+                    `).join('');
+
+                    document.querySelector('.color-stats h3').textContent = `🎨 颜色统计 (共 ${stats.length} 种颜色)`;
+                }
+
+                findClosestBead(r, g, b) {
+                    let minDist = Infinity;
+                    let closest = this.beadColors[0];
+
+                    for (const bead of this.beadColors) {
+                        const hex = bead.hex.replace('#', '');
+                        const br = parseInt(hex.substr(0, 2), 16);
+                        const bg = parseInt(hex.substr(2, 2), 16);
+                        const bb = parseInt(hex.substr(4, 2), 16);
+
+                        const dist = Math.sqrt((r - br) ** 2 + (g - bg) ** 2 + (b - bb) ** 2);
+                        if (dist < minDist) {
+                            minDist = dist;
+                            closest = bead;
+                        }
+                    }
+
+                    return closest;
+                }
+
+                // 保存历史记录
+                saveToHistory(x, y, oldCode, newCode) {
+                    this.undoStack.push({ x, y, oldCode, newCode });
+
+                    // 限制历史记录大小
+                    if (this.undoStack.length > this.maxHistorySize) {
+                        this.undoStack.shift();
+                    }
+
+                    // 新操作后清空重做栈
+                    this.redoStack = [];
+                }
+
+                // 撤回操作
+                undo() {
+                    if (this.undoStack.length === 0) return;
+
+                    const action = this.undoStack.pop();
+                    const { x, y, oldCode } = action;
+
+                    // 找到旧颜色对应的珠子
+                    const oldBead = this.beadColors.find(bead => bead.code === oldCode);
+                    if (!oldBead) return;
+
+                    // 恢复像素颜色
+                    const hex = oldBead.hex.replace('#', '');
+                    const r = parseInt(hex.substr(0, 2), 16);
+                    const g = parseInt(hex.substr(2, 2), 16);
+                    const b = parseInt(hex.substr(4, 2), 16);
+
+                    const currentCode = this.pixelToBeadCode[y][x];
+                    this.pixelData[y][x] = [r, g, b];
+                    this.pixelToBeadCode[y][x] = oldCode;
+
+                    // 更新统计
+                    if (this.beadCodeStats[currentCode]) {
+                        this.beadCodeStats[currentCode].count--;
+                        if (this.beadCodeStats[currentCode].count === 0) {
+                            delete this.beadCodeStats[currentCode];
+                        }
+                    }
+
+                    if (this.beadCodeStats[oldCode]) {
+                        this.beadCodeStats[oldCode].count++;
+                    } else {
+                        this.beadCodeStats[oldCode] = {
+                            code: oldBead.code,
+                            name: oldBead.name,
+                            hex: oldBead.hex,
+                            count: 1
+                        };
+                    }
+
+                    // 保存到重做栈
+                    this.redoStack.push(action);
+
+                    this.drawPixels();
+                    this.updateStatsDisplay();
+                    this.updateUndoRedoButtons();
+                }
+
+                // 重做操作
+                redo() {
+                    if (this.redoStack.length === 0) return;
+
+                    const action = this.redoStack.pop();
+                    const { x, y, newCode } = action;
+
+                    // 找到新颜色对应的珠子
+                    const newBead = this.beadColors.find(bead => bead.code === newCode);
+                    if (!newBead) return;
+
+                    // 重新应用颜色
+                    const hex = newBead.hex.replace('#', '');
+                    const r = parseInt(hex.substr(0, 2), 16);
+                    const g = parseInt(hex.substr(2, 2), 16);
+                    const b = parseInt(hex.substr(4, 2), 16);
+
+                    const currentCode = this.pixelToBeadCode[y][x];
+                    this.pixelData[y][x] = [r, g, b];
+                    this.pixelToBeadCode[y][x] = newCode;
+
+                    // 更新统计
+                    if (this.beadCodeStats[currentCode]) {
+                        this.beadCodeStats[currentCode].count--;
+                        if (this.beadCodeStats[currentCode].count === 0) {
+                            delete this.beadCodeStats[currentCode];
+                        }
+                    }
+
+                    if (this.beadCodeStats[newCode]) {
+                        this.beadCodeStats[newCode].count++;
+                    } else {
+                        this.beadCodeStats[newCode] = {
+                            code: newBead.code,
+                            name: newBead.name,
+                            hex: newBead.hex,
+                            count: 1
+                        };
+                    }
+
+                    // 保存回撤回栈
+                    this.undoStack.push(action);
+
+                    this.drawPixels();
+                    this.updateStatsDisplay();
+                    this.updateUndoRedoButtons();
+                }
+
+                // 更新撤回/重做按钮状态
+                updateUndoRedoButtons() {
+                    const undoBtn = document.getElementById('undoBtn');
+                    const redoBtn = document.getElementById('redoBtn');
+
+                    if (undoBtn) {
+                        undoBtn.disabled = this.undoStack.length === 0;
+                        undoBtn.style.opacity = this.undoStack.length === 0 ? '0.5' : '1';
+                    }
+
+                    if (redoBtn) {
+                        redoBtn.disabled = this.redoStack.length === 0;
+                        redoBtn.style.opacity = this.redoStack.length === 0 ? '0.5' : '1';
+                    }
+                }
+
+                initEventListeners() {
+                    // 画笔绘制
+                    const handlePaint = (e) => {
+                        if (this.isDragging) return;
+
+                        e.preventDefault();
+                        let clientX, clientY;
+
+                        if (e.touches) {
+                            if (e.touches.length > 1) return; // 多指触摸不绘制
+                            clientX = e.touches[0].clientX;
+                            clientY = e.touches[0].clientY;
+                        } else {
+                            clientX = e.clientX;
+                            clientY = e.clientY;
+                        }
+
+                        const { x, y } = this.getCanvasCoordinates(clientX, clientY);
+                        this.paintPixel(x, y);
+                    };
+
+                    // 鼠标绘制
+                    this.canvasContainer.addEventListener('mousedown', (e) => {
+                        this.isPainting = true;
+                        handlePaint(e);
+                    });
+
+                    this.canvasContainer.addEventListener('mousemove', (e) => {
+                        if (this.isPainting) {
+                            handlePaint(e);
+                        } else {
+                            // 显示信息
+                            const { x, y } = this.getCanvasCoordinates(e.clientX, e.clientY);
+                            if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
+                                const [r, g, b] = this.pixelData[y][x];
+                                document.getElementById('pixelInfo').textContent =
+                                    `位置: (${x}, ${y}) | 颜色: RGB(${r}, ${g}, ${b})`;
+                            }
+                        }
+                    });
+
+                    this.canvasContainer.addEventListener('mouseup', () => {
+                        this.isPainting = false;
+                    });
+
+                    this.canvasContainer.addEventListener('mouseleave', () => {
+                        this.isPainting = false;
+                    });
+
+                    // 修改现有的触摸事件处理
+                    this.canvasContainer.addEventListener('touchstart', (e) => {
+                        // ✅ 允许多指触摸进行缩放
+                        if (e.touches.length === 1) {
+                            this.isPainting = true;
+                            handlePaint(e);
+                        } else if (e.touches.length > 1) {
+                            // 多指触摸时不阻止默认行为，允许缩放
+                            return;
+                        }
+                    }, { passive: false });
+
+                    this.canvasContainer.addEventListener('touchmove', (e) => {
+                        if (e.touches.length === 1 && this.isPainting) {
+                            handlePaint(e);
+                        } else if (e.touches.length > 1) {
+                            // ✅ 多指触摸时不阻止默认行为，允许缩放
+                            return;
+                        }
+                    }, { passive: false });
+
+                    this.canvasContainer.addEventListener('touchend', (e) => {
+                        if (e.touches.length === 0) {
+                            this.isPainting = false;
+                        }
+                        // ✅ 不阻止默认行为，允许缩放手势完成
+                    });
+
+
+
+                    // 选择画笔
+                    document.getElementById('chooseBrushBtn').addEventListener('click', () => {
+                        this.showColorPicker();
+                    });
+
+                    // 橡皮擦按钮
+                    document.getElementById('eraserBtn').addEventListener('click', () => {
+                        this.enableEraser();
+                    });
+
+                    // 颜色搜索
+                    document.getElementById('colorSearch').addEventListener('input', (e) => {
+                        const query = e.target.value.toLowerCase();
+                        const items = document.querySelectorAll('.color-picker-item');
+                        items.forEach(item => {
+                            const text = item.textContent.toLowerCase();
+                            item.style.display = text.includes(query) ? 'block' : 'none';
+                        });
+                    });
+
+                    document.getElementById('colorPickerModal').addEventListener('click', (e) => {
+                        if (e.target.id === 'colorPickerModal') {
+                            this.closeColorPicker();
+                        }
+                    });
+
+                    // 键盘快捷键：Ctrl+Z 撤回，Ctrl+Y 重做，E 橡皮擦
+                    document.addEventListener('keydown', (e) => {
+                        if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+                            e.preventDefault();
+                            this.undo();
+                        } else if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
+                            e.preventDefault();
+                            this.redo();
+                        } else if (e.key === 'e' || e.key === 'E') {
+                            // 只有在没有输入框聚焦时才触发
+                            if (document.activeElement.tagName !== 'INPUT') {
+                                e.preventDefault();
+                                this.enableEraser();
+                            }
+                        }
+                    });
+
+                    // 撤回/重做按钮事件
+                    const undoBtn = document.getElementById('undoBtn');
+                    const redoBtn = document.getElementById('redoBtn');
+
+                    if (undoBtn) {
+                        undoBtn.addEventListener('click', () => this.undo());
+                    }
+
+                    if (redoBtn) {
+                        redoBtn.addEventListener('click', () => this.redo());
+                    }
+                }
+
+                showColorPicker() {
+                    const modal = document.getElementById('colorPickerModal');
+                    modal.style.display = 'flex';
+                }
+
+                closeColorPicker() {
+                    document.getElementById('colorPickerModal').style.display = 'none';
+                }
+
+                async saveEdits() {
+                    if (!confirm('确定要保存修改吗？这将更新图纸。')) return;
+
+                    const saveBtn = document.getElementById('saveEditBtn');
+                    const originalText = saveBtn.textContent;
+                    saveBtn.textContent = '💾 保存中...';
+                    saveBtn.disabled = true;
+
+                    try {
+                        const totalPixels = this.width * this.height;
+                        const colorStats = Object.values(this.beadCodeStats).map(item => ({
+                            ...item,
+                            percentage: ((item.count / totalPixels) * 100).toFixed(1) + '%'
+                        }));
+                        colorStats.sort((a, b) => b.count - a.count);
+
+                        const response = await fetch('/api/save-edited-pattern', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                pixel_data: this.pixelData,
+                                color_stats: colorStats
+                            })
+                        });
+
+                        const data = await response.json();
+                        if (data.success) {
+                            alert('✅ 保存成功！图纸已更新。');
+
+                            // 更新图片显示
+                            const imgElement = document.querySelector('.image-box img');
+                            if (imgElement) {
+                                imgElement.src = data.board_url + '?' + Date.now();
+                            }
+
+                            // 更新下载链接
+                            const downloadLink = document.getElementById('downloadBoardLink');
+                            if (downloadLink && data.download_url) {
+                                downloadLink.href = data.download_url;
+                            }
+
+                            // ✅ 新增：更新CSV下载链接
+                            const csvDownloadLink = document.querySelector('a[href*="csv"]');
+                            if (csvDownloadLink && data.csv_download_url) {
+                                csvDownloadLink.href = data.csv_download_url;
+                                console.log('CSV下载链接已更新:', data.csv_download_url);
+                            }
+
+                            this.originalData = JSON.parse(JSON.stringify(this.pixelData));
+                            this.exitEditMode();
+                        } else {
+                            alert('❌ 保存失败: ' + (data.error || '未知错误'));
+                            console.error('Save error:', data);
+                        }
+                    } catch (error) {
+                        alert('❌ 保存出错: ' + error.message);
+                        console.error('Save exception:', error);
+                    } finally {
+                        saveBtn.textContent = originalText;
+                        saveBtn.disabled = false;
+                    }
+                }
+
+
+                exitEditMode() {
+                    // 重置撤回栈
+                    this.undoStack = [];
+                    this.redoStack = [];
+
+                    document.getElementById('editorContainer').style.display = 'none';
+                    document.getElementById('toggleEditBtn').textContent = '✏️ 进入编辑模式';
+                    document.getElementById('toggleEditBtn').style.display = 'inline-block';
+                    document.getElementById('toggleEditBtn').disabled = false;
+                    this.toggleEditingMode(false);
+                }
+            }
+
+            let editor = null;
+
+            document.getElementById('toggleEditBtn').addEventListener('click', async function () {
+                const container = document.getElementById('editorContainer');
+                if (container.style.display === 'none') {
+                    this.textContent = '⏳ 加载中...';
+                    this.disabled = true;
+
+                    if (!editor) {
+                        editor = new PixelEditor();
+                    }
+
+                    await editor.loadData();
+
+                    container.style.display = 'block';
+                    this.style.display = 'none';
+                }
+            });
+
+            document.getElementById('saveEditBtn').addEventListener('click', () => {
+                if (editor) editor.saveEdits();
+            });
+
+            document.getElementById('cancelEditBtn').addEventListener('click', () => {
+                if (editor && confirm('确定要取消编辑吗？未保存的修改将丢失。')) {
+                    editor.pixelData = JSON.parse(JSON.stringify(editor.originalData));
+                    editor.drawPixels();
+                    editor.initStatsFromPage();
+                    editor.exitEditMode();
+                }
+            });
+
+            document.getElementById('closeColorPicker').addEventListener('click', () => {
+                if (editor) editor.closeColorPicker();
+            });
+            // 页面离开时清理文件（与index.html相同的代码）
+            function setupPageCleanup() {
+                let isCleanupCalled = false;
+
+                function cleanupFiles() {
+                    if (isCleanupCalled) return;
+                    isCleanupCalled = true;
+
+                    console.log('页面离开，开始清理临时文件...');
+
+                    if (navigator.sendBeacon) {
+                        navigator.sendBeacon('/api/cleanup-session', JSON.stringify({}));
+                    } else {
+                        fetch('/api/cleanup-session', {
+                            method: 'POST',
+                            keepalive: true,
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({})
+                        }).catch(() => {
+                            console.log('清理请求失败，但这是正常的（页面正在离开）');
+                        });
+                    }
+                }
+
+                window.addEventListener('beforeunload', cleanupFiles);
+                window.addEventListener('pagehide', cleanupFiles);
+
+                document.addEventListener('visibilitychange', function () {
+                    if (document.visibilityState === 'hidden') {
+                        cleanupFiles();
+                    }
+                });
+            }
+
+            // 启动清理机制
+            setupPageCleanup();
+
+            // 修改现有的返回链接，使其使用清理跳转
+            document.addEventListener('DOMContentLoaded', function () {
+                // 找到返回首页的链接并修改其行为
+                const homeLinks = document.querySelectorAll('a[href="/"], a[href*="index"]');
+                homeLinks.forEach(link => {
+                    link.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        navigateWithCleanup(this.href);
+                    });
+                });
+            });
+
+            function navigateWithCleanup(url) {
+                fetch('/api/cleanup-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                }).then(() => {
+                    window.location.href = url;
+                }).catch(() => {
+                    window.location.href = url;
+                });
+            }
+        </script>
+        <div class="color-stats">
+            <h3>🎨 颜色统计 (共 {{ total_colors }} 种颜色)</h3>
+            <div class="color-grid">
+                {% for color in color_stats %}
+                <div class="color-item">
+                    <div class="color-box" style="background-color: {{ color.hex }};"></div>
+                    <div style="font-size: 0.85rem; color: #333; font-weight: 600; margin: 0.3rem 0;">{{ color.name }}
+                    </div>
+                    <div style="font-size: 0.8rem; color: #999;">{{ color.code }}</div>
+                    <div style="font-weight: bold; margin-top: 0.5rem; color: #667eea;">{{ color.count }} 个</div>
+                    <div style="font-size: 0.8rem; color: #999;">占比 {{ color.percentage }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div
+            style="text-align: center; margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <!-- 改为： -->
+            <a href="/" class="btn" style="padding: 1rem 2rem; font-size: 1.1rem; background: #e0e0e0; color: #666;">
+                ← 返回重新生成
+            </a>
+            <a href="{{ download_csv }}" class="btn"
+                style="padding: 1rem 2rem; font-size: 1.1rem; background: #28a745;">
+                📊 下载颜色统计表
+            </a>
+            <a href="{{ url_for('index') }}" class="btn" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                🏠 返回首页重新制作
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

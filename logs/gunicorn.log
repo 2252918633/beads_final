@@ -1,0 +1,5 @@
+nohup: ignoring input
+
+Error: Already running on PID 9325 (or pid file '/root/project/backend/gunicorn.pid' is stale)
+
+警告: photo2pixel_api未找到 - No module named 'photo2pixel_api'

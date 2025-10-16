@@ -1,0 +1,47 @@
+python3: can't open file '/root/project/backend/app.py': [Errno 2] No such file or directory
+✓ photo2pixel_api 加载成功 (三个方法: pixel_effect, pixel_segment, edge_enhance)
+✓ OpenCV 背景去除功能加载成功
+ * Serving Flask app 'api'
+ * Debug mode: on
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5001
+ * Running on http://172.17.9.130:5001
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 374-140-411
+127.0.0.1 - - [14/Oct/2025 14:01:33] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:42] "POST /api/process-step1 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:42] "GET /file?p=temp_processing/20251014140142188438_step1.png&t=1760421702294 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:47] "POST /api/process-step2?_t=1760421707404 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:47] "POST /api/process-step3 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:47] "GET /file?p=outputs/20251014140142188438_draft_pixel_display.png&t=1760421707633 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:47] "GET /file?p=outputs/20251014140142188438_draft_board.png&t=1760421707633 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:52] "GET /file?p=outputs/20251014140142188438_draft_pixel_display.png&t=1760421712244 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:01:59] "POST /api/apply-clustering HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:02:00] "GET /result HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:02:02] "GET /file?p=outputs/20251014140142188438_final_smart_board.png HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:02:13] "GET /api/get-pixel-data HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:02:52] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:05:12] "POST /api/process-step1 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:05:12] "GET /file?p=temp_processing/20251014140511927161_step1.png&t=1760421912014 HTTP/1.1" 200 -
+127.0.0.1 - - [14/Oct/2025 14:12:15] "GET / HTTP/1.1" 302 -
+ * Detected change in '/root/project/backend/api.py', reloading
+✓ photo2pixel_api 加载成功 (三个方法: pixel_effect, pixel_segment, edge_enhance)
+✓ OpenCV 背景去除功能加载成功
+======================================================================
+[API] 步骤2 - 像素画生成
+[API] 收到参数: pixels_per_row=50, algorithm=original, edge_thresh=80
+[API] 使用算法: 简单像素化
+[API] 像素画已保存: temp_processing/20251014140142188438_step2_7475.png
+======================================================================
+======================================================================
+[API] 开始应用聚类算法: smart, 颜色数: 16
+[API] 智能聚类（聚类后匹配色号）
+[颜色量化] 使用Lab色彩空间K-means，目标颜色数: 16
+[API] 颜色统计完成，共 16 种颜色
+======================================================================
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 374-140-411

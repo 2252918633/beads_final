@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 拼豆图纸生成器</title>
+
+    <!-- 禁止缓存登录页面 -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .login-container {
+            background: #fff;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #999;
+            font-size: 0.95rem;
+        }
+
+        /* 提示信息框 */
+        .info-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-left: 4px solid #667eea;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .info-box .icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .error-box {
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            border-left: 4px solid #f44336;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            color: #c62828;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .error-box .icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        /* 表单样式 */
+        form {
+            margin-top: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper .icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #999;
+            pointer-events: none;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="text"]::placeholder {
+            text-transform: none;
+            letter-spacing: normal;
+            font-weight: normal;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* 底部链接 */
+        .footer-links {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .footer-links p {
+            color: #999;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        /* 功能特性展示 */
+        .features {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+
+        .features h3 {
+            color: #667eea;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            color: #666;
+            font-size: 0.9rem;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .logo-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <!-- Logo 区域 -->
+        <div class="logo-section">
+            <div class="logo-icon">🎨</div>
+            <h1>拼豆图纸生成器</h1>
+            <p class="subtitle">让创作变得更简单</p>
+        </div>
+
+        <!-- 错误提示 -->
+        {% if error %}
+        <div class="error-box">
+            <span class="icon">❌</span>
+            <div>{{ error }}</div>
+        </div>
+        {% endif %}
+
+        <!-- 使用说明 -->
+        <div class="info-box">
+            <span class="icon">ℹ️</span>
+            <div>
+                由于服务器限制，减少恶意攻击。每个验证码每月可使用 <strong>100次</strong>，下月初自动重置，如果次数用完可以私聊作者重置次数。
+            </div>
+        </div>
+
+        <!-- 登录表单 -->
+        <form method="POST" autocomplete="off">
+            <div class="input-group">
+                <label for="code">验证码</label>
+                <div class="input-wrapper">
+                    <span class="icon">🔑</span>
+                    <input type="text" id="code" name="code" placeholder="请输入验证码" required autocomplete="off"
+                        maxlength="20" autofocus>
+                </div>
+            </div>
+
+            <button type="submit">
+                🚀 立即登录
+            </button>
+        </form>
+
+        <!-- 功能特性 -->
+        <div class="features">
+            <h3>✨ 功能特性</h3>
+            <ul class="feature-list">
+                <li>AI智能颜色识别与聚类</li>
+                <li>支持线条增强效果</li>
+                <li>自动生成拼豆图纸</li>
+                <li>提供完整的材料清单</li>
+            </ul>
+        </div>
+
+        <!-- 底部说明 -->
+        <div class="footer-links">
+            <p>
+                上传图片后，系统将自动生成精美的拼豆图纸<br>
+                支持 JPG、PNG 格式，最大 10MB
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 自动聚焦到输入框
+        document.addEventListener('DOMContentLoaded', function () {
+            const input = document.getElementById('code');
+            if (input) {
+                input.focus();
+            }
+        });
+
+        // 回车提交
+        document.getElementById('code').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                e.target.form.submit();
+            }
+        });
+    </script>
+</body>
+
+</html>
