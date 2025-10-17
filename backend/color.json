@@ -1,1419 +1,944 @@
 {
     "bead_palette": [
         {
-            "code": "A01",
-            "hex": "#FAF4C8",
-            "name": "米白"
+            "code": "A1",
+            "name": "A1",
+            "hex": "#fff5ca"
         },
         {
-            "code": "A02",
-            "hex": "#FFFFD5",
-            "name": "浅黄"
+            "code": "A2",
+            "name": "A2",
+            "hex": "#ffffcc"
         },
         {
-            "code": "A03",
-            "hex": "#FEFF8B",
-            "name": "柠檬黄"
+            "code": "A3",
+            "name": "A3",
+            "hex": "#fff297"
         },
         {
-            "code": "A04",
-            "hex": "#FBED56",
-            "name": "金黄"
+            "code": "A4",
+            "name": "A4",
+            "hex": "#fff651"
         },
         {
-            "code": "A05",
-            "hex": "#F4D738",
-            "name": "亮黄"
+            "code": "A5",
+            "name": "A5",
+            "hex": "#ffdb4d"
         },
         {
-            "code": "A06",
-            "hex": "#FEAC4C",
-            "name": "橙黄"
+            "code": "A6",
+            "name": "A6",
+            "hex": "#fcc73b"
         },
         {
-            "code": "A07",
-            "hex": "#FE8B4C",
-            "name": "橙红"
+            "code": "A7",
+            "name": "A7",
+            "hex": "#fe8443"
         },
         {
-            "code": "A08",
-            "hex": "#FFDA45",
-            "name": "橙色"
+            "code": "A8",
+            "name": "A8",
+            "hex": "#e5c62d"
         },
         {
-            "code": "A09",
-            "hex": "#FF995B",
-            "name": "珊瑚橙"
+            "code": "A9",
+            "name": "A9",
+            "hex": "#fbaa72"
         },
         {
             "code": "A10",
-            "hex": "#F77C31",
-            "name": "浅橙红"
+            "name": "A10",
+            "hex": "#fd9443"
         },
         {
             "code": "A11",
-            "hex": "#FFDD99",
-            "name": "杏黄"
+            "name": "A11",
+            "hex": "#ffcf7c"
         },
         {
             "code": "A12",
-            "hex": "#FE9F72",
-            "name": "浅粉橙"
-        },
-        {
-            "code": "A13",
-            "hex": "#FFC365",
-            "name": "芥末黄"
+            "name": "A12",
+            "hex": "#fdbc9e"
         },
         {
             "code": "A14",
-            "hex": "#FD543D",
-            "name": "大红"
-        },
-        {
-            "code": "A15",
-            "hex": "#FFF365",
-            "name": "明黄"
+            "name": "A14",
+            "hex": "#ff7443"
         },
         {
             "code": "A16",
-            "hex": "#FFFF9F",
-            "name": "奶油黄"
+            "name": "A16",
+            "hex": "#fff49e"
         },
         {
             "code": "A17",
-            "hex": "#FFE36E",
-            "name": "蜜橙"
+            "name": "A17",
+            "hex": "#fde676"
         },
         {
             "code": "A18",
-            "hex": "#FEBE7D",
-            "name": "浅橙"
+            "name": "A18",
+            "hex": "#ffb67b"
         },
         {
             "code": "A19",
-            "hex": "#FD7C72",
-            "name": "粉红"
+            "name": "A19",
+            "hex": "#fa9285"
         },
         {
             "code": "A20",
-            "hex": "#FFD568",
-            "name": "南瓜橙"
+            "name": "A20",
+            "hex": "#fee27e"
         },
         {
-            "code": "A21",
-            "hex": "#FFE395",
-            "name": "焦糖"
+            "code": "B1",
+            "name": "B1",
+            "hex": "#eaf149"
         },
         {
-            "code": "A22",
-            "hex": "#F4F57D",
-            "name": "浅金"
+            "code": "B2",
+            "name": "B2",
+            "hex": "#b6eb45"
         },
         {
-            "code": "A23",
-            "hex": "#E6C9B7",
-            "name": "肉粉"
+            "code": "B3",
+            "name": "B3",
+            "hex": "#9af5a8"
         },
         {
-            "code": "A24",
-            "hex": "#F7F8A2",
-            "name": "象牙"
+            "code": "B4",
+            "name": "B4",
+            "hex": "#51ff51"
         },
         {
-            "code": "A25",
-            "hex": "#FFD67D",
-            "name": "土黄"
+            "code": "B5",
+            "name": "B5",
+            "hex": "#6fd363"
         },
         {
-            "code": "A26",
-            "hex": "#FFC830",
-            "name": "深橙"
+            "code": "B6",
+            "name": "B6",
+            "hex": "#79ebc7"
         },
         {
-            "code": "B01",
-            "hex": "#E6EE31",
-            "name": "荧光黄"
+            "code": "B7",
+            "name": "B7",
+            "hex": "#3bb48b"
         },
         {
-            "code": "B02",
-            "hex": "#63F347",
-            "name": "黄绿"
+            "code": "B8",
+            "name": "B8",
+            "hex": "#13904c"
         },
         {
-            "code": "B03",
-            "hex": "#9EF780",
-            "name": "浅绿"
-        },
-        {
-            "code": "B04",
-            "hex": "#5DE035",
-            "name": "荧光绿"
-        },
-        {
-            "code": "B05",
-            "hex": "#35E352",
-            "name": "青柠绿"
-        },
-        {
-            "code": "B06",
-            "hex": "#65E2A6",
-            "name": "青色"
-        },
-        {
-            "code": "B07",
-            "hex": "#3DAF80",
-            "name": "深青"
-        },
-        {
-            "code": "B08",
-            "hex": "#1C9C4F",
-            "name": "绿色"
-        },
-        {
-            "code": "B09",
-            "hex": "#27523A",
-            "name": "深绿"
+            "code": "B9",
+            "name": "B9",
+            "hex": "#28523a"
         },
         {
             "code": "B10",
-            "hex": "#95D3C2",
-            "name": "浅蓝绿"
+            "name": "B10",
+            "hex": "#ace1d9"
         },
         {
             "code": "B11",
-            "hex": "#5D722A",
-            "name": "橄榄绿"
+            "name": "B11",
+            "hex": "#52641d"
         },
         {
             "code": "B12",
-            "hex": "#166F41",
-            "name": "海绿"
+            "name": "B12",
+            "hex": "#206a4f"
         },
         {
             "code": "B13",
-            "hex": "#CAEB7B",
-            "name": "亮黄绿"
+            "name": "B13",
+            "hex": "#c7ff85"
         },
         {
             "code": "B14",
-            "hex": "#ADE946",
-            "name": "霓虹黄"
+            "name": "B14",
+            "hex": "#d0ed39"
         },
         {
             "code": "B15",
-            "hex": "#2E5132",
-            "name": "森林绿"
+            "name": "B15",
+            "hex": "#205726"
         },
         {
             "code": "B16",
-            "hex": "#C5ED9C",
-            "name": "薄荷绿"
+            "name": "B16",
+            "hex": "#ccffaa"
         },
         {
             "code": "B17",
-            "hex": "#9BB13A",
-            "name": "橄榄暗绿"
+            "name": "B17",
+            "hex": "#b6c130"
         },
         {
             "code": "B18",
-            "hex": "#E6EE49",
-            "name": "卡其"
+            "name": "B18",
+            "hex": "#e4f954"
         },
         {
             "code": "B19",
-            "hex": "#24B88C",
-            "name": "浅海绿"
+            "name": "B19",
+            "hex": "#00d0a1"
         },
         {
             "code": "B20",
-            "hex": "#C2F0CC",
-            "name": "粉蓝"
+            "name": "B20",
+            "hex": "#c4ffd7"
         },
         {
             "code": "B21",
-            "hex": "#156A6B",
-            "name": "青绿"
+            "name": "B21",
+            "hex": "#157c74"
         },
         {
             "code": "B22",
-            "hex": "#0B3C43",
-            "name": "军蓝绿"
+            "name": "B22",
+            "hex": "#0d5349"
         },
         {
             "code": "B23",
-            "hex": "#303A21",
-            "name": "深灰绿"
+            "name": "B23",
+            "hex": "#32451d"
         },
         {
             "code": "B24",
-            "hex": "#EEFCA5",
-            "name": "米色"
+            "name": "B24",
+            "hex": "#e4fb9f"
         },
         {
             "code": "B25",
-            "hex": "#4E846D",
-            "name": "翡翠绿"
+            "name": "B25",
+            "hex": "#5c9083"
         },
         {
             "code": "B26",
-            "hex": "#8D7A35",
-            "name": "暗金"
+            "name": "B26",
+            "hex": "#a9a44e"
         },
         {
-            "code": "B27",
-            "hex": "#CCE1AF",
-            "name": "暗卡其"
+            "code": "C1",
+            "name": "C1",
+            "hex": "#e0ffe2"
         },
         {
-            "code": "B28",
-            "hex": "#9EE5B9",
-            "name": "淡绿"
+            "code": "C2",
+            "name": "C2",
+            "hex": "#b9f6ed"
         },
         {
-            "code": "B29",
-            "hex": "#C5E254",
-            "name": "黄色"
+            "code": "C3",
+            "name": "C3",
+            "hex": "#a8e1fc"
         },
         {
-            "code": "B30",
-            "hex": "#E2FCB1",
-            "name": "柠檬绸"
+            "code": "C4",
+            "name": "C4",
+            "hex": "#84d2ff"
         },
         {
-            "code": "B31",
-            "hex": "#B0E792",
-            "name": "蜜瓜绿"
+            "code": "C5",
+            "name": "C5",
+            "hex": "#24b9e4"
         },
         {
-            "code": "B32",
-            "hex": "#9CAB5A",
-            "name": "黄绿2"
+            "code": "C6",
+            "name": "C6",
+            "hex": "#78bdf8"
         },
         {
-            "code": "C01",
-            "hex": "#E8FFE7",
-            "name": "浅薄荷"
+            "code": "C7",
+            "name": "C7",
+            "hex": "#3c8aec"
         },
         {
-            "code": "C02",
-            "hex": "#A9F9FC",
-            "name": "青绿"
+            "code": "C8",
+            "name": "C8",
+            "hex": "#195dc4"
         },
         {
-            "code": "C03",
-            "hex": "#A0E2FB",
-            "name": "天空蓝"
-        },
-        {
-            "code": "C04",
-            "hex": "#41CCFF",
-            "name": "深天蓝"
-        },
-        {
-            "code": "C05",
-            "hex": "#01ACEB",
-            "name": "蓝色"
-        },
-        {
-            "code": "C06",
-            "hex": "#50AAF0",
-            "name": "宝蓝"
-        },
-        {
-            "code": "C07",
-            "hex": "#3677D2",
-            "name": "道奇蓝"
-        },
-        {
-            "code": "C08",
-            "hex": "#0F54C0",
-            "name": "宝石蓝"
-        },
-        {
-            "code": "C09",
-            "hex": "#324BCA",
-            "name": "纯蓝"
+            "code": "C9",
+            "name": "C9",
+            "hex": "#2e26cc"
         },
         {
             "code": "C10",
-            "hex": "#3EBCE2",
-            "name": "青色"
+            "name": "C10",
+            "hex": "#30d9ed"
         },
         {
             "code": "C11",
-            "hex": "#28DDD",
-            "name": "深青"
+            "name": "C11",
+            "hex": "#00c4d0"
         },
         {
             "code": "C12",
-            "hex": "#1C334D",
-            "name": "午夜蓝"
+            "name": "C12",
+            "hex": "#1a3758"
         },
         {
             "code": "C13",
-            "hex": "#CDE8FF",
-            "name": "浅钢蓝"
+            "name": "C13",
+            "hex": "#b4d7ff"
         },
         {
             "code": "C14",
-            "hex": "#D5FDFF",
-            "name": "淡紫灰"
+            "name": "C14",
+            "hex": "#e0fff9"
         },
         {
             "code": "C15",
-            "hex": "#22C4C6",
-            "name": "暗青"
+            "name": "C15",
+            "hex": "#00cbd2"
         },
         {
             "code": "C16",
-            "hex": "#1557A8",
-            "name": "海军蓝"
+            "name": "C16",
+            "hex": "#0a5491"
         },
         {
             "code": "C17",
-            "hex": "#04D1F6",
-            "name": "碧蓝"
+            "name": "C17",
+            "hex": "#7be7f4"
         },
         {
             "code": "C18",
-            "hex": "#1D3344",
-            "name": "深海蓝"
+            "name": "C18",
+            "hex": "#264257"
         },
         {
             "code": "C19",
-            "hex": "#1887A2",
-            "name": "深青色"
+            "name": "C19",
+            "hex": "#259bb9"
         },
         {
             "code": "C20",
-            "hex": "#176DAF",
-            "name": "钢蓝"
+            "name": "C20",
+            "hex": "#157cbf"
         },
         {
             "code": "C21",
-            "hex": "#BEDDFF",
-            "name": "爱丽丝蓝"
+            "name": "C21",
+            "hex": "#deeefe"
         },
         {
             "code": "C22",
-            "hex": "#67B4BE",
-            "name": "海洋绿"
+            "name": "C22",
+            "hex": "#7fc0d4"
         },
         {
-            "code": "C23",
-            "hex": "#C8E2FF",
-            "name": "浅灰"
+            "code": "D1",
+            "name": "D1",
+            "hex": "#b9cffe"
         },
         {
-            "code": "C24",
-            "hex": "#7CC4FF",
-            "name": "浅蓝"
+            "code": "D2",
+            "name": "D2",
+            "hex": "#9ca6db"
         },
         {
-            "code": "C25",
-            "hex": "#A985E5",
-            "name": "绿松石"
+            "code": "D3",
+            "name": "D3",
+            "hex": "#224eb1"
         },
         {
-            "code": "C26",
-            "hex": "#09DFF4",
-            "name": "水鸭色"
+            "code": "D4",
+            "name": "D4",
+            "hex": "#2e4770"
         },
         {
-            "code": "C27",
-            "hex": "#B8CFED",
-            "name": "白烟"
+            "code": "D5",
+            "name": "D5",
+            "hex": "#c56fb8"
         },
         {
-            "code": "C28",
-            "hex": "#34488E",
-            "name": "浅灰色"
+            "code": "D6",
+            "name": "D6",
+            "hex": "#aa76e4"
         },
         {
-            "code": "C29",
-            "hex": "#AEB4F2",
-            "name": "藏青"
+            "code": "D7",
+            "name": "D7",
+            "hex": "#7e4dc7"
         },
         {
-            "code": "D01",
-            "hex": "#B58CED",
-            "name": "浅蓝紫"
+            "code": "D8",
+            "name": "D8",
+            "hex": "#e0cdff"
         },
         {
-            "code": "D02",
-            "hex": "#2F54AF",
-            "name": "天蓝"
-        },
-        {
-            "code": "D03",
-            "hex": "#0066FF",
-            "name": "宝蓝"
-        },
-        {
-            "code": "D04",
-            "hex": "#182A84",
-            "name": "深蓝"
-        },
-        {
-            "code": "D05",
-            "hex": "#B843C5",
-            "name": "玫红"
-        },
-        {
-            "code": "D06",
-            "hex": "#AC7BDE",
-            "name": "浅紫"
-        },
-        {
-            "code": "D07",
-            "hex": "#8854B3",
-            "name": "紫色"
-        },
-        {
-            "code": "D08",
-            "hex": "#E2D3FF",
-            "name": "淡紫"
-        },
-        {
-            "code": "D09",
-            "hex": "#D5B9F8",
-            "name": "蓟紫"
+            "code": "D9",
+            "name": "D9",
+            "hex": "#c9befd"
         },
         {
             "code": "D10",
-            "hex": "#361B51",
-            "name": "深靛蓝"
+            "name": "D10",
+            "hex": "#351d4f"
         },
         {
             "code": "D11",
-            "hex": "#B9BAE1",
-            "name": "粉蓝"
+            "name": "D11",
+            "hex": "#c1c2ff"
         },
         {
             "code": "D12",
-            "hex": "#DE9AD4",
-            "name": "粉紫"
+            "name": "D12",
+            "hex": "#daafe4"
         },
         {
             "code": "D13",
-            "hex": "#B90095",
-            "name": "洋红"
+            "name": "D13",
+            "hex": "#c64dae"
         },
         {
             "code": "D14",
-            "hex": "#8B279B",
-            "name": "紫罗兰"
+            "name": "D14",
+            "hex": "#9735b3"
         },
         {
             "code": "D15",
-            "hex": "#2F1F90",
-            "name": "深蓝紫"
+            "name": "D15",
+            "hex": "#46297d"
         },
         {
             "code": "D16",
-            "hex": "#E3E1EE",
-            "name": "白色"
+            "name": "D16",
+            "hex": "#e3e4ff"
         },
         {
             "code": "D17",
-            "hex": "#C4D4F6",
-            "name": "浅天蓝"
+            "name": "D17",
+            "hex": "#c9d9fd"
         },
         {
             "code": "D18",
-            "hex": "#A45EC7",
-            "name": "中紫"
+            "name": "D18",
+            "hex": "#b87bd5"
         },
         {
             "code": "D19",
-            "hex": "#D8C3D7",
-            "name": "浅粉"
+            "name": "D19",
+            "hex": "#e8cbfa"
         },
         {
             "code": "D20",
-            "hex": "#9C32B2",
-            "name": "兰花紫"
+            "name": "D20",
+            "hex": "#a73ae9"
         },
         {
             "code": "D21",
-            "hex": "#9A009B",
-            "name": "深紫红"
+            "name": "D21",
+            "hex": "#8b339b"
         },
         {
             "code": "D22",
-            "hex": "#4333A5",
-            "name": "中蓝"
+            "name": "D22",
+            "hex": "#595093"
         },
         {
             "code": "D23",
-            "hex": "#EBDAFC",
-            "name": "幽灵白"
+            "name": "D23",
+            "hex": "#efe7fc"
         },
         {
             "code": "D24",
-            "hex": "#7786E5",
-            "name": "矢车菊蓝"
+            "name": "D24",
+            "hex": "#7f77ea"
         },
         {
             "code": "D25",
-            "hex": "#494FC7",
-            "name": "蓝色"
+            "name": "D25",
+            "hex": "#423bc0"
         },
         {
-            "code": "D26",
-            "hex": "#DFC2F8",
-            "name": "粉红"
+            "code": "E1",
+            "name": "E1",
+            "hex": "#ffd1cc"
         },
         {
-            "code": "E01",
-            "hex": "#FDD3C0",
-            "name": "浅肤粉"
+            "code": "E2",
+            "name": "E2",
+            "hex": "#ffcaea"
         },
         {
-            "code": "E02",
-            "hex": "#FEC0DF",
-            "name": "浅粉"
+            "code": "E3",
+            "name": "E3",
+            "hex": "#fb8dc5"
         },
         {
-            "code": "E03",
-            "hex": "#FFB7E7",
-            "name": "粉红"
+            "code": "E4",
+            "name": "E4",
+            "hex": "#ee78ac"
         },
         {
-            "code": "E04",
-            "hex": "#E8649E",
-            "name": "深粉"
+            "code": "E5",
+            "name": "E5",
+            "hex": "#f653a6"
         },
         {
-            "code": "E05",
-            "hex": "#F551A2",
-            "name": "亮粉"
+            "code": "E6",
+            "name": "E6",
+            "hex": "#fd2f81"
         },
         {
-            "code": "E06",
-            "hex": "#F13D74",
-            "name": "荧光粉"
+            "code": "E7",
+            "name": "E7",
+            "hex": "#a2176a"
         },
         {
-            "code": "E07",
-            "hex": "#C63478",
-            "name": "深玫红"
+            "code": "E8",
+            "name": "E8",
+            "hex": "#ffd8e8"
         },
         {
-            "code": "E08",
-            "hex": "#FFDBE9",
-            "name": "淡裸粉"
-        },
-        {
-            "code": "E09",
-            "hex": "#E970C0",
-            "name": "中粉"
+            "code": "E9",
+            "name": "E9",
+            "hex": "#ea8cda"
         },
         {
             "code": "E10",
-            "hex": "#D33793",
-            "name": "深红粉"
+            "name": "E10",
+            "hex": "#bf3974"
         },
         {
             "code": "E11",
-            "hex": "#FCDDD2",
-            "name": "肤色"
+            "name": "E11",
+            "hex": "#fee7e2"
         },
         {
             "code": "E12",
-            "hex": "#F78FC3",
-            "name": "浅樱粉"
+            "name": "E12",
+            "hex": "#fcafdd"
         },
         {
             "code": "E13",
-            "hex": "#B5006D",
-            "name": "紫红"
+            "name": "E13",
+            "hex": "#a61284"
         },
         {
             "code": "E14",
-            "hex": "#FFD1BA",
-            "name": "橙粉"
+            "name": "E14",
+            "hex": "#fdd2bf"
         },
         {
             "code": "E15",
-            "hex": "#F8C7C9",
-            "name": "裸粉"
+            "name": "E15",
+            "hex": "#f3d1d7"
         },
         {
             "code": "E16",
-            "hex": "#FFF3EB",
-            "name": "玉米丝色"
+            "name": "E16",
+            "hex": "#fff3eb"
         },
         {
             "code": "E17",
-            "hex": "#FFE2EA",
-            "name": "薰衣草"
+            "name": "E17",
+            "hex": "#fae8f8"
         },
         {
             "code": "E18",
-            "hex": "#FFC7DB",
-            "name": "淡粉"
+            "name": "E18",
+            "hex": "#fdd1ea"
         },
         {
             "code": "E19",
-            "hex": "#FEBAD5",
-            "name": "极浅粉"
+            "name": "E19",
+            "hex": "#f6d3f3"
         },
         {
             "code": "E20",
-            "hex": "#D8C7D1",
-            "name": "樱花粉"
+            "name": "E20",
+            "hex": "#f4d7e9"
         },
         {
             "code": "E21",
-            "hex": "#BD9DA1",
-            "name": "玫瑰褐"
+            "name": "E21",
+            "hex": "#d6b3b9"
         },
         {
             "code": "E22",
-            "hex": "#B785A1",
-            "name": "梅红"
+            "name": "E22",
+            "hex": "#c685b0"
         },
         {
             "code": "E23",
-            "hex": "#937A8D",
-            "name": "深紫粉"
+            "name": "E23",
+            "hex": "#a089a3"
         },
         {
-            "code": "E24",
-            "hex": "#E1BCE8",
-            "name": "淡紫灰"
+            "code": "F1",
+            "name": "F1",
+            "hex": "#fda098"
         },
         {
-            "code": "F01",
-            "hex": "#FD957B",
-            "name": "浅肉粉"
+            "code": "F2",
+            "name": "F2",
+            "hex": "#fa6a62"
         },
         {
-            "code": "F02",
-            "hex": "#FC3D46",
-            "name": "浅玫瑰"
+            "code": "F3",
+            "name": "F3",
+            "hex": "#ec4a59"
         },
         {
-            "code": "F03",
-            "hex": "#F74941",
-            "name": "粉红"
+            "code": "F4",
+            "name": "F4",
+            "hex": "#ff452c"
         },
         {
-            "code": "F04",
-            "hex": "#FC283C",
-            "name": "正红"
+            "code": "F5",
+            "name": "F5",
+            "hex": "#ff0000"
         },
         {
-            "code": "F05",
-            "hex": "#E7002F",
-            "name": "深红"
+            "code": "F6",
+            "name": "F6",
+            "hex": "#b53710"
         },
         {
-            "code": "F06",
-            "hex": "#943630",
-            "name": "印度红"
+            "code": "F7",
+            "name": "F7",
+            "hex": "#811530"
         },
         {
-            "code": "F07",
-            "hex": "#971937",
-            "name": "暗红"
+            "code": "F8",
+            "name": "F8",
+            "hex": "#bb082f"
         },
         {
-            "code": "F08",
-            "hex": "#BC0028",
-            "name": "猩红"
-        },
-        {
-            "code": "F09",
-            "hex": "#E2677A",
-            "name": "浅珊瑚粉"
+            "code": "F9",
+            "name": "F9",
+            "hex": "#e67088"
         },
         {
             "code": "F10",
-            "hex": "#8A4526",
-            "name": "番茄红"
+            "name": "F10",
+            "hex": "#8c420c"
         },
         {
             "code": "F11",
-            "hex": "#5A2121",
-            "name": "深褐红"
+            "name": "F11",
+            "hex": "#6f3329"
         },
         {
             "code": "F12",
-            "hex": "#FD4E6A",
-            "name": "深粉红"
+            "name": "F12",
+            "hex": "#f9425e"
         },
         {
             "code": "F13",
-            "hex": "#F35744",
-            "name": "朱红"
+            "name": "F13",
+            "hex": "#d14b30"
         },
         {
             "code": "F14",
-            "hex": "#FFA9AD",
-            "name": "粉色"
+            "name": "F14",
+            "hex": "#fdaca9"
         },
         {
             "code": "F15",
-            "hex": "#D30022",
-            "name": "鲜红"
+            "name": "F15",
+            "hex": "#dd0c2c"
         },
         {
             "code": "F16",
-            "hex": "#FEC2A6",
-            "name": "贝壳白"
+            "name": "F16",
+            "hex": "#fddedc"
         },
         {
             "code": "F17",
-            "hex": "#E69C79",
-            "name": "桃色"
+            "name": "F17",
+            "hex": "#fbaf9f"
         },
         {
             "code": "F18",
-            "hex": "#D37C46",
-            "name": "橙红"
+            "name": "F18",
+            "hex": "#e0804d"
         },
         {
             "code": "F19",
-            "hex": "#C1444A",
-            "name": "玫红"
+            "name": "F19",
+            "hex": "#c64b60"
         },
         {
-            "code": "F20",
-            "hex": "#CD9391",
-            "name": "巧克力"
+            "code": "G1",
+            "name": "G1",
+            "hex": "#fee5c7"
         },
         {
-            "code": "F21",
-            "hex": "#F7B4C6",
-            "name": "苍紫红"
+            "code": "G2",
+            "name": "G2",
+            "hex": "#fcceb7"
         },
         {
-            "code": "F22",
-            "hex": "#FDC0DD",
-            "name": "小麦色"
+            "code": "G3",
+            "name": "G3",
+            "hex": "#f9c2a4"
         },
         {
-            "code": "F23",
-            "hex": "#F67E66",
-            "name": "橙红色"
+            "code": "G4",
+            "name": "G4",
+            "hex": "#dcb99a"
         },
         {
-            "code": "F24",
-            "hex": "#E698AA",
-            "name": "浅粉紫"
+            "code": "G5",
+            "name": "G5",
+            "hex": "#f2a76d"
         },
         {
-            "code": "F25",
-            "hex": "#E54B4F",
-            "name": "浅粉紫"
+            "code": "G6",
+            "name": "G6",
+            "hex": "#ee9867"
         },
         {
-            "code": "G01",
-            "hex": "#FFE2CE",
-            "name": "玉米丝"
+            "code": "G7",
+            "name": "G7",
+            "hex": "#91664e"
         },
         {
-            "code": "G02",
-            "hex": "#FFC4AA",
-            "name": "小麦色"
+            "code": "G8",
+            "name": "G8",
+            "hex": "#4d312c"
         },
         {
-            "code": "G03",
-            "hex": "#F4C3A5",
-            "name": "硬木色"
-        },
-        {
-            "code": "G04",
-            "hex": "#E1B383",
-            "name": "巧克力"
-        },
-        {
-            "code": "G05",
-            "hex": "#EDB045",
-            "name": "深橙"
-        },
-        {
-            "code": "G06",
-            "hex": "#E99C17",
-            "name": "橙色"
-        },
-        {
-            "code": "G07",
-            "hex": "#9D5B3E",
-            "name": "马鞍棕"
-        },
-        {
-            "code": "G08",
-            "hex": "#753B32",
-            "name": "深棕"
-        },
-        {
-            "code": "G09",
-            "hex": "#E6B483",
-            "name": "鹿皮色"
+            "code": "G9",
+            "name": "G9",
+            "hex": "#eabb85"
         },
         {
             "code": "G10",
-            "hex": "#D98C39",
-            "name": "秘鲁棕"
+            "name": "G10",
+            "hex": "#bf9143"
         },
         {
             "code": "G11",
-            "hex": "#E0C593",
-            "name": "卡其黄"
+            "name": "G11",
+            "hex": "#e4c896"
         },
         {
             "code": "G12",
-            "hex": "#FFC890",
-            "name": "杏仁白"
+            "name": "G12",
+            "hex": "#ddb986"
         },
         {
             "code": "G13",
-            "hex": "#B7714A",
-            "name": "珊瑚色"
+            "name": "G13",
+            "hex": "#d19058"
         },
         {
             "code": "G14",
-            "hex": "#8D614C",
-            "name": "赭色"
+            "name": "G14",
+            "hex": "#856a54"
         },
         {
             "code": "G15",
-            "hex": "#FCF9E0",
-            "name": "柠檬绸"
+            "name": "G15",
+            "hex": "#f5f3dc"
         },
         {
             "code": "G16",
-            "hex": "#F2D9BA",
-            "name": "金麒麟"
+            "name": "G16",
+            "hex": "#f2dfce"
         },
         {
             "code": "G17",
-            "hex": "#7B524B",
-            "name": "黑色"
+            "name": "G17",
+            "hex": "#5d5249"
         },
         {
             "code": "G18",
-            "hex": "#FFE4C0",
-            "name": "古董白"
+            "name": "G18",
+            "hex": "#ffedd9"
         },
         {
             "code": "G19",
-            "hex": "#E07935",
-            "name": "深金黄"
+            "name": "G19",
+            "hex": "#eca450"
         },
         {
             "code": "G20",
-            "hex": "#A94023",
-            "name": "暗金"
+            "name": "G20",
+            "hex": "#b0623e"
         },
         {
             "code": "G21",
-            "hex": "#B88558",
-            "name": "玫瑰褐"
+            "name": "G21",
+            "hex": "#cb906e"
         },
         {
-            "code": "H01",
-            "hex": "#FDFBFF",
-            "name": "极浅灰"
+            "code": "H2",
+            "name": "H2",
+            "hex": "#ffffff"
         },
         {
-            "code": "H02",
-            "hex": "#FEFFFF",
-            "name": "白色"
+            "code": "H3",
+            "name": "H3",
+            "hex": "#aeaeae"
         },
         {
-            "code": "H03",
-            "hex": "#B6B1BA",
-            "name": "浅灰"
+            "code": "H4",
+            "name": "H4",
+            "hex": "#979296"
         },
         {
-            "code": "H04",
-            "hex": "#898580",
-            "name": "深灰"
+            "code": "H5",
+            "name": "H5",
+            "hex": "#606060"
         },
         {
-            "code": "H05",
-            "hex": "#48464E",
-            "name": "暗灰"
+            "code": "H6",
+            "name": "H6",
+            "hex": "#353537"
         },
         {
-            "code": "H06",
-            "hex": "#2F2B2F",
-            "name": "炭灰"
+            "code": "H7",
+            "name": "H7",
+            "hex": "#000000"
         },
         {
-            "code": "H07",
-            "hex": "#000000",
-            "name": "黑色"
+            "code": "H8",
+            "name": "H8",
+            "hex": "#f7e6f0"
         },
         {
-            "code": "H08",
-            "hex": "#E7D6DB",
-            "name": "粉灰"
-        },
-        {
-            "code": "H09",
-            "hex": "#EDEDED",
-            "name": "米灰"
+            "code": "H9",
+            "name": "H9",
+            "hex": "#e6e3dc"
         },
         {
             "code": "H10",
-            "hex": "#EEE9EA",
-            "name": "雪白"
+            "name": "H10",
+            "hex": "#e5e2f3"
         },
         {
             "code": "H11",
-            "hex": "#CCCDD5",
-            "name": "银灰"
+            "name": "H11",
+            "hex": "#cecdcb"
         },
         {
             "code": "H12",
-            "hex": "#FFF5ED",
-            "name": "花白"
+            "name": "H12",
+            "hex": "#fff2e2"
         },
         {
             "code": "H13",
-            "hex": "#F5ECD2",
-            "name": "小麦灰"
+            "name": "H13",
+            "hex": "#ece1cb"
         },
         {
             "code": "H14",
-            "hex": "#CFD7D3",
-            "name": "灰色"
+            "name": "H14",
+            "hex": "#c5ced8"
         },
         {
             "code": "H15",
-            "hex": "#98A6A8",
-            "name": "浅钢蓝灰"
+            "name": "H15",
+            "hex": "#9facc7"
         },
         {
             "code": "H16",
-            "hex": "#1D1414",
-            "name": "纯黑"
+            "name": "H16",
+            "hex": "#241d1a"
         },
         {
             "code": "H17",
-            "hex": "#F1EDED",
-            "name": "白烟"
+            "name": "H17",
+            "hex": "#f6f4f5"
         },
         {
             "code": "H18",
-            "hex": "#FFFDF0",
-            "name": "米白"
+            "name": "H18",
+            "hex": "#fffdf1"
         },
         {
             "code": "H19",
-            "hex": "#F6EFE2",
-            "name": "淡黄米"
+            "name": "H19",
+            "hex": "#f8f3eb"
         },
         {
             "code": "H20",
-            "hex": "#949FA3",
-            "name": "中灰"
+            "name": "H20",
+            "hex": "#a0acb1"
         },
         {
-            "code": "H21",
-            "hex": "#FFFBE1",
-            "name": "古董白"
+            "code": "M1",
+            "name": "M1",
+            "hex": "#ccd7c9"
         },
         {
-            "code": "H22",
-            "hex": "#CACAD4",
-            "name": "浅米"
+            "code": "M2",
+            "name": "M2",
+            "hex": "#91aa94"
         },
         {
-            "code": "H23",
-            "hex": "#9A9D94",
-            "name": "橄榄灰"
+            "code": "M3",
+            "name": "M3",
+            "hex": "#718898"
         },
         {
-            "code": "M01",
-            "hex": "#BCC6B8",
-            "name": "哑光薄荷"
+            "code": "M4",
+            "name": "M4",
+            "hex": "#dacec2"
         },
         {
-            "code": "M02",
-            "hex": "#8AA386",
-            "name": "哑光海绿"
+            "code": "M5",
+            "name": "M5",
+            "hex": "#dbd6b6"
         },
         {
-            "code": "M03",
-            "hex": "#697D80",
-            "name": "哑光军蓝"
+            "code": "M6",
+            "name": "M6",
+            "hex": "#c8b999"
         },
         {
-            "code": "M04",
-            "hex": "#E3D2B0",
-            "name": "哑光小麦"
+            "code": "M7",
+            "name": "M7",
+            "hex": "#c1aca7"
         },
         {
-            "code": "M05",
-            "hex": "#D0CCAA",
-            "name": "哑光卡其"
+            "code": "M8",
+            "name": "M8",
+            "hex": "#b09699"
         },
         {
-            "code": "M06",
-            "hex": "#B0A782",
-            "name": "哑光暗卡其"
-        },
-        {
-            "code": "M07",
-            "hex": "#B4A497",
-            "name": "哑光桃"
-        },
-        {
-            "code": "M08",
-            "hex": "#B38281",
-            "name": "哑光玫瑰褐"
-        },
-        {
-            "code": "M09",
-            "hex": "#A58767",
-            "name": "哑光金麒麟"
+            "code": "M9",
+            "name": "M9",
+            "hex": "#ab9787"
         },
         {
             "code": "M10",
-            "hex": "#C5B2B0",
-            "name": "哑光蓟紫"
+            "name": "M10",
+            "hex": "#bb9fb9"
         },
         {
             "code": "M11",
-            "hex": "#9F7594",
-            "name": "哑光兰花紫"
+            "name": "M11",
+            "hex": "#9b809f"
         },
         {
             "code": "M12",
-            "hex": "#644749",
-            "name": "哑光中紫"
+            "name": "M12",
+            "hex": "#5a474c"
         },
         {
             "code": "M13",
-            "hex": "#D19066",
-            "name": "哑光珊瑚"
+            "name": "M13",
+            "hex": "#dda89a"
         },
         {
             "code": "M14",
-            "hex": "#C77362",
-            "name": "哑光暗红"
+            "name": "M14",
+            "hex": "#c0725d"
         },
         {
             "code": "M15",
-            "hex": "#757D7B",
-            "name": "哑光石板灰"
-        },
-        {
-            "code": "P01",
-            "hex": "#FCF7F8",
-            "name": "珠光米白"
-        },
-        {
-            "code": "P02",
-            "hex": "#B0A9AC",
-            "name": "珠光灰"
-        },
-        {
-            "code": "P03",
-            "hex": "#5FD0A7",
-            "name": "珠光绿"
-        },
-        {
-            "code": "P04",
-            "hex": "#FEA49F",
-            "name": "珠光橙红"
-        },
-        {
-            "code": "P05",
-            "hex": "#EE8C3E",
-            "name": "珠光橙"
-        },
-        {
-            "code": "P06",
-            "hex": "#5FD0A7",
-            "name": "珠光青"
-        },
-        {
-            "code": "P07",
-            "hex": "#EB9270",
-            "name": "珠光桃"
-        },
-        {
-            "code": "P08",
-            "hex": "#F0D958",
-            "name": "珠光黄"
-        },
-        {
-            "code": "P09",
-            "hex": "#D9D9D9",
-            "name": "珠光白"
-        },
-        {
-            "code": "P10",
-            "hex": "#D9C7EA",
-            "name": "珠光紫"
-        },
-        {
-            "code": "P11",
-            "hex": "#F3ECC9",
-            "name": "珠光淡黄"
-        },
-        {
-            "code": "P12",
-            "hex": "#E6EEF2",
-            "name": "珠光浅蓝"
-        },
-        {
-            "code": "P13",
-            "hex": "#AACBEF",
-            "name": "珠光蓝"
-        },
-        {
-            "code": "P14",
-            "hex": "#3376B0",
-            "name": "珠光深蓝"
-        },
-        {
-            "code": "P15",
-            "hex": "#68B575",
-            "name": "珠光深绿"
-        },
-        {
-            "code": "P16",
-            "hex": "#FFEFAB",
-            "name": "珠光金黄"
-        },
-        {
-            "code": "P17",
-            "hex": "#FEA324",
-            "name": "珠光金橙"
-        },
-        {
-            "code": "P18",
-            "hex": "#FEB89F",
-            "name": "珠光肉粉"
-        },
-        {
-            "code": "P19",
-            "hex": "#FFE0E9",
-            "name": "珠光浅粉"
-        },
-        {
-            "code": "P20",
-            "hex": "#FEBECF",
-            "name": "珠光粉紫"
-        },
-        {
-            "code": "P21",
-            "hex": "#ECBEBF",
-            "name": "珠光浅玫瑰"
-        },
-        {
-            "code": "P22",
-            "hex": "#E4A89F",
-            "name": "珠光暖粉"
-        },
-        {
-            "code": "P23",
-            "hex": "#A56268",
-            "name": "珠光暗粉"
-        },
-        {
-            "code": "Q1",
-            "hex": "#F2A5E8",
-            "name": "亮粉紫"
-        },
-        {
-            "code": "Q2",
-            "hex": "#E9FC91",
-            "name": "亮黄绿"
-        },
-        {
-            "code": "Q3",
-            "hex": "#FFFF00",
-            "name": "亮黄"
-        },
-        {
-            "code": "Q4",
-            "hex": "#FFEBFA",
-            "name": "亮浅粉"
-        },
-        {
-            "code": "Q5",
-            "hex": "#76CEDE",
-            "name": "亮浅蓝"
-        },
-        {
-            "code": "R01",
-            "hex": "#D50D21",
-            "name": "荧光红"
-        },
-        {
-            "code": "R02",
-            "hex": "#F92F83",
-            "name": "荧光洋红"
-        },
-        {
-            "code": "R03",
-            "hex": "#FD8324",
-            "name": "荧光橙"
-        },
-        {
-            "code": "R04",
-            "hex": "#F8EC31",
-            "name": "荧光黄"
-        },
-        {
-            "code": "R05",
-            "hex": "#35C75B",
-            "name": "荧光绿"
-        },
-        {
-            "code": "R06",
-            "hex": "#23B891",
-            "name": "荧光青"
-        },
-        {
-            "code": "R07",
-            "hex": "#19779D",
-            "name": "荧光青蓝"
-        },
-        {
-            "code": "R08",
-            "hex": "#1A60C3",
-            "name": "荧光蓝"
-        },
-        {
-            "code": "R09",
-            "hex": "#9A56B4",
-            "name": "荧光紫"
-        },
-        {
-            "code": "R10",
-            "hex": "#FFDB4C",
-            "name": "荧光亮黄"
-        },
-        {
-            "code": "R11",
-            "hex": "#FFEBFA",
-            "name": "夜光粉"
-        },
-        {
-            "code": "R12",
-            "hex": "#D8D5CE",
-            "name": "夜光白"
-        },
-        {
-            "code": "R13",
-            "hex": "#55514C",
-            "name": "夜光黑"
-        },
-        {
-            "code": "R14",
-            "hex": "#9FE4DF",
-            "name": "夜光浅青"
-        },
-        {
-            "code": "R15",
-            "hex": "#77CEE9",
-            "name": "夜光浅蓝"
-        },
-        {
-            "code": "R16",
-            "hex": "#3ECFCA",
-            "name": "夜光青蓝"
-        },
-        {
-            "code": "R17",
-            "hex": "#4A867A",
-            "name": "夜光薄荷"
-        },
-        {
-            "code": "R18",
-            "hex": "#7FCD9D",
-            "name": "夜光浅绿"
-        },
-        {
-            "code": "R19",
-            "hex": "#CDE55D",
-            "name": "夜光黄绿"
-        },
-        {
-            "code": "R20",
-            "hex": "#E8C7B4",
-            "name": "夜光雪白"
-        },
-        {
-            "code": "R21",
-            "hex": "#AD6F30",
-            "name": "夜光桃"
-        },
-        {
-            "code": "R22",
-            "hex": "#6C372F",
-            "name": "夜光珊瑚"
-        },
-        {
-            "code": "R23",
-            "hex": "#FEB872",
-            "name": "夜光淡黄"
-        },
-        {
-            "code": "R24",
-            "hex": "#F3C1C0",
-            "name": "夜光淡紫粉"
-        },
-        {
-            "code": "R25",
-            "hex": "#C9675E",
-            "name": "夜光粉红"
-        },
-        {
-            "code": "R26",
-            "hex": "#D293BE",
-            "name": "夜光浅紫"
-        },
-        {
-            "code": "R27",
-            "hex": "#EA8CB1",
-            "name": "夜光樱粉"
-        },
-        {
-            "code": "R28",
-            "hex": "#9C87D6",
-            "name": "夜光蓟紫"
-        },
-        {
-            "code": "T1",
-            "hex": "#FFFFFF",
-            "name": "透明白"
-        },
-        {
-            "code": "Y1",
-            "hex": "#FD6FB4",
-            "name": "亮粉"
-        },
-        {
-            "code": "Y2",
-            "hex": "#FEB481",
-            "name": "亮橙"
-        },
-        {
-            "code": "Y3",
-            "hex": "#D7FAA0",
-            "name": "亮浅绿"
-        },
-        {
-            "code": "Y4",
-            "hex": "#8BDBFA",
-            "name": "亮浅蓝"
-        },
-        {
-            "code": "Y5",
-            "hex": "#E987EA",
-            "name": "亮紫"
+            "name": "M15",
+            "hex": "#86848a"
         }
     ]
 }
