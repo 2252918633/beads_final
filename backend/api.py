@@ -35,7 +35,8 @@ from methods import (
     image_to_bead_palette_counts,
     add_coordinates_to_board,
     advanced_color_quantization,
-    pixel_segment
+    pixel_segment,
+    MardColorMatcher        # ✅ 添加 Mard 颜色匹配器
 )
 
 try:
@@ -72,6 +73,7 @@ os.makedirs(TEMP_FOLDER, exist_ok=True)
 # 加载配置数据
 VALID_CODES = load_valid_codes()
 BEAD_COLORS = load_bead_colors()
+MARD_MATCHER = MardColorMatcher()  # ✅ 添加这一行
 
 def login_required(f):
     @wraps(f)
@@ -95,32 +97,36 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# 辅助函数：计算颜色统计
 def calculate_color_stats(pixel_img):
     """统计图像中的颜色并匹配最接近的拼豆颜色"""
-    import cv2
-    
     pixels = np.array(pixel_img).reshape(-1, 3)
     unique_colors, unique_counts = np.unique(pixels, axis=0, return_counts=True)
     total_pixels = pixels.shape[0]
     
-    # 预计算拼豆色表的Lab值
-    bead_data = []
-    for bead in BEAD_COLORS:
-        try:
-            hex_color = bead['hex'].lstrip('#')
-            rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-            rgb_array = np.uint8([[rgb]])
-            lab = cv2.cvtColor(rgb_array, cv2.COLOR_RGB2LAB)[0][0]
-            bead_data.append({
-                'code': bead['code'],
-                'name': bead['name'],
-                'hex': bead['hex'],
-                'rgb': rgb,
-                'lab': lab
-            })
-        except:
-            continue
+    color_map = {}
+    for color, count in zip(unique_colors, unique_counts):
+        # ✅ 使用 MardColorMatcher
+        r, g, b = int(color[0]), int(color[1]), int(color[2])
+        matched = MARD_MATCHER.find_closest_color(r, g, b)
+        
+        key = matched['name']  # 使用 Mard 色号作为 key
+        if key in color_map:
+            color_map[key]['count'] += int(count)
+        else:
+            color_map[key] = {
+                'code': matched['name'],
+                'name': matched['name'],
+                'hex': '#' + matched['hex'],
+                'count': int(count)
+            }
+    
+    stats = list(color_map.values())
+    stats.sort(key=lambda x: -x['count'])
+    
+    for item in stats:
+        item['percentage'] = f"{(item['count'] / total_pixels * 100):.1f}%"
+    
+    return stats
     
     # 匹配每个颜色到最接近的拼豆色
     color_map = {}
@@ -523,23 +529,15 @@ def apply_clustering():
                 # 实际颜色值
                 hex_color = '#{:02x}{:02x}{:02x}'.format(int(rgb[0]), int(rgb[1]), int(rgb[2]))
                 
-                # 找最接近的拼豆色号
-                rgb_lab = cv2.cvtColor(rgb.reshape(1, 1, 3), cv2.COLOR_RGB2LAB)
-                rgb_lab = rgb_lab.reshape(3).astype(np.float32)
-                
-                distances = np.sqrt(((bead_lab - rgb_lab) ** 2).sum(axis=1))
-                closest_idx = np.argmin(distances)
-                closest_bead = bead_data[closest_idx]
-                
-                # 保存映射关系（用于后续在图纸上标注）
-                color_key = (int(rgb[0]), int(rgb[1]), int(rgb[2]))
-                color_to_code[color_key] = closest_bead['code']
-                
+                # ✅ 替换为
+                matched = MARD_MATCHER.find_closest_color(int(rgb[0]), int(rgb[1]), int(rgb[2]))
+                color_to_code[color_key] = matched['name']
+
                 color_stats.append({
-                    'code': closest_bead['code'],
-                    'name': closest_bead['name'],
+                    'code': matched['name'],
+                    'name': matched['name'],
                     'hex': hex_color,
-                    'bead_hex': closest_bead['hex'],
+                    'bead_hex': '#' + matched['hex'],
                     'count': int(count),
                     'percentage': f'{percentage:.1f}%'
                 })
@@ -587,23 +585,15 @@ def apply_clustering():
                 
                 hex_color = '#{:02x}{:02x}{:02x}'.format(int(rgb[0]), int(rgb[1]), int(rgb[2]))
                 
-                # 找最接近的拼豆色号
-                rgb_lab = cv2.cvtColor(rgb.reshape(1, 1, 3), cv2.COLOR_RGB2LAB)
-                rgb_lab = rgb_lab.reshape(3).astype(np.float32)
-                
-                distances = np.sqrt(((bead_lab - rgb_lab) ** 2).sum(axis=1))
-                closest_idx = np.argmin(distances)
-                closest_bead = bead_data[closest_idx]
-                
-                # 保存映射
-                color_key = (int(rgb[0]), int(rgb[1]), int(rgb[2]))
-                color_to_code[color_key] = closest_bead['code']
-                
+                # ✅ 替换为
+                matched = MARD_MATCHER.find_closest_color(int(rgb[0]), int(rgb[1]), int(rgb[2]))
+                color_to_code[color_key] = matched['name']
+
                 color_stats.append({
-                    'code': closest_bead['code'],
-                    'name': closest_bead['name'],
+                    'code': matched['name'],
+                    'name': matched['name'],
                     'hex': hex_color,
-                    'bead_hex': closest_bead['hex'],
+                    'bead_hex': '#' + matched['hex'],
                     'count': int(count),
                     'percentage': f'{percentage:.1f}%'
                 })
@@ -916,13 +906,13 @@ def save_edited_pattern():
                 pixel_color = tuple(img_array[y, x])
                 
                 if pixel_color not in color_to_code:
-                    rgb_lab = cv2.cvtColor(np.array([[pixel_color]], dtype=np.uint8), cv2.COLOR_RGB2LAB)
-                    rgb_lab = rgb_lab.reshape(3).astype(np.float32)
-                    
-                    distances = np.sqrt(((bead_lab - rgb_lab) ** 2).sum(axis=1))
-                    closest_idx = np.argmin(distances)
-                    color_to_code[pixel_color] = bead_data[closest_idx]['code']
-                
+                    matched = MARD_MATCHER.find_closest_color(
+                        int(pixel_color[0]), 
+                        int(pixel_color[1]), 
+                        int(pixel_color[2])
+                    )
+                    color_to_code[pixel_color] = matched['name']
+
                 bead_code = color_to_code[pixel_color]
                 
                 # 计算格子中心位置
@@ -1185,13 +1175,15 @@ def generate_pattern():
                 pixel_color = tuple(pixel_arr[y, x])
                 
                 # 找最接近的拼豆色号
+                # ✅ 替换为
                 if pixel_color not in color_to_code:
-                    rgb_lab = cv2.cvtColor(np.array([[pixel_color]], dtype=np.uint8), cv2.COLOR_RGB2LAB)
-                    rgb_lab = rgb_lab.reshape(3).astype(np.float32)
-                    distances = np.sqrt(((bead_lab - rgb_lab) ** 2).sum(axis=1))
-                    closest_idx = np.argmin(distances)
-                    color_to_code[pixel_color] = bead_data[closest_idx]['code']
-                
+                    matched = MARD_MATCHER.find_closest_color(
+                        int(pixel_color[0]),
+                        int(pixel_color[1]),
+                        int(pixel_color[2])
+                    )
+                    color_to_code[pixel_color] = matched['name']
+
                 bead_code = color_to_code[pixel_color]
                 
                 # 计算格子中心位置
