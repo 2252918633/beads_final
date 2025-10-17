@@ -376,23 +376,48 @@ def advanced_color_quantization(img, n_colors=16):
     # 重建图像
     quantized_data = centers[labels].reshape(img.size[1], img.size[0], 3)
     return Image.fromarray(quantized_data)
+from colormath.color_objects import LabColor, sRGBColor
+from colormath.color_conversions import convert_color
+from colormath.color_diff import delta_e_cie2000
+import colorsys
+
+def compress_saturation(rgb, factor=0.9):
+    h, l, s = colorsys.rgb_to_hls(*(x/255 for x in rgb))
+    s = min(1.0, s * factor)
+    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    return (int(r*255), int(g*255), int(b*255))
+
 def find_closest_bead_color(rgb, bead_colors):
-    """找到最接近的拼豆颜色（使用改进的Lab色彩距离）"""
+    """最高准确度拼豆色匹配（含饱和度压缩 + CIEDE2000）"""
     if not bead_colors:
         return None
-    
-    min_distance = float('inf')
+    print(1111111111)
+    # 校正输入颜色
+    rgb = compress_saturation(rgb, 0.9)
+
+    # 转换目标色到 Lab（注意 sRGB 非线性）
+    target_color = convert_color(
+        sRGBColor(rgb[0], rgb[1], rgb[2], is_upscaled=True, is_linear=False),
+        LabColor
+    )
+
+    min_distance = float("inf")
     closest_bead = None
-    
+
     for bead in bead_colors:
         bead_rgb = hex_to_rgb(bead['hex'])
-        distance = color_distance_advanced(rgb, bead_rgb)
-        
+        bead_lab = convert_color(
+            sRGBColor(bead_rgb[0], bead_rgb[1], bead_rgb[2], is_upscaled=True, is_linear=False),
+            LabColor
+        )
+        distance = delta_e_cie2000(target_color, bead_lab)
+
         if distance < min_distance:
             min_distance = distance
             closest_bead = bead
-    
+
     return closest_bead
+
 
 def kmeans_then_map_to_beads(img, k, bead_colors):
     """先KMeans聚类，再映射到拼豆颜色"""
@@ -587,3 +612,224 @@ def pixel_segment(input_image_path, pixels_per_row, output_image_path,
         pixel_img = small.resize((w, h), Image.NEAREST)
         pixel_img.save(output_image_path, format='PNG')
         print(f"[降级] 使用简单像素化完成")
+"""
+拼豆色号转换器 - Mard品牌
+将RGB颜色转换为最接近的Mard拼豆色号
+"""
+
+from typing import Tuple, Dict, Optional
+from functools import lru_cache
+
+
+class MardColorMatcher:
+    """Mard拼豆色号匹配器"""
+    
+    # Mard调色板数据 (色号: RGB十六进制颜色)
+    MARD_PALETTE = {
+        'A1': 'fff5ca', 'A2': 'ffffcc', 'A3': 'fff297', 'A4': 'fff651',
+        'A5': 'ffdb4d', 'A6': 'fcc73b', 'A7': 'fe8443', 'A8': 'e5c62d',
+        'A9': 'fbaa72', 'A10': 'fd9443', 'A11': 'ffcf7c', 'A12': 'fdbc9e',
+        'A14': 'ff7443', 'A16': 'fff49e', 'A17': 'fde676', 'A18': 'ffb67b',
+        'A19': 'fa9285', 'A20': 'fee27e',
+        
+        'B1': 'eaf149', 'B2': 'b6eb45', 'B3': '9af5a8', 'B4': '51ff51',
+        'B5': '6fd363', 'B6': '79ebc7', 'B7': '3bb48b', 'B8': '13904c',
+        'B9': '28523a', 'B10': 'ace1d9', 'B11': '52641d', 'B12': '206a4f',
+        'B13': 'c7ff85', 'B14': 'd0ed39', 'B15': '205726', 'B16': 'ccffaa',
+        'B17': 'b6c130', 'B18': 'e4f954', 'B19': '00d0a1', 'B20': 'c4ffd7',
+        'B21': '157c74', 'B22': '0d5349', 'B23': '32451d', 'B24': 'e4fb9f',
+        'B25': '5c9083', 'B26': 'a9a44e',
+        
+        'C1': 'e0ffe2', 'C2': 'b9f6ed', 'C3': 'a8e1fc', 'C4': '84d2ff',
+        'C5': '24b9e4', 'C6': '78bdf8', 'C7': '3c8aec', 'C8': '195dc4',
+        'C9': '2e26cc', 'C10': '30d9ed', 'C11': '00c4d0', 'C12': '1a3758',
+        'C13': 'b4d7ff', 'C14': 'e0fff9', 'C15': '00cbd2', 'C16': '0a5491',
+        'C17': '7be7f4', 'C18': '264257', 'C19': '259bb9', 'C20': '157cbf',
+        'C21': 'deeefe', 'C22': '7fc0d4',
+        
+        'D1': 'b9cffe', 'D2': '9ca6db', 'D3': '224eb1', 'D4': '2e4770',
+        'D5': 'c56fb8', 'D6': 'aa76e4', 'D7': '7e4dc7', 'D8': 'e0cdff',
+        'D9': 'c9befd', 'D10': '351d4f', 'D11': 'c1c2ff', 'D12': 'daafe4',
+        'D13': 'c64dae', 'D14': '9735b3', 'D15': '46297d', 'D16': 'e3e4ff',
+        'D17': 'c9d9fd', 'D18': 'b87bd5', 'D19': 'e8cbfa', 'D20': 'a73ae9',
+        'D21': '8b339b', 'D22': '595093', 'D23': 'efe7fc', 'D24': '7f77ea',
+        'D25': '423bc0',
+        
+        'E1': 'ffd1cc', 'E2': 'ffcaea', 'E3': 'fb8dc5', 'E4': 'ee78ac',
+        'E5': 'f653a6', 'E6': 'fd2f81', 'E7': 'a2176a', 'E8': 'ffd8e8',
+        'E9': 'ea8cda', 'E10': 'bf3974', 'E11': 'fee7e2', 'E12': 'fcafdd',
+        'E13': 'a61284', 'E14': 'fdd2bf', 'E15': 'f3d1d7', 'E16': 'fff3eb',
+        'E17': 'fae8f8', 'E18': 'fdd1ea', 'E19': 'f6d3f3', 'E20': 'f4d7e9',
+        'E21': 'd6b3b9', 'E22': 'c685b0', 'E23': 'a089a3',
+        
+        'F1': 'fda098', 'F2': 'fa6a62', 'F3': 'ec4a59', 'F4': 'ff452c',
+        'F5': 'ff0000', 'F6': 'b53710', 'F7': '811530', 'F8': 'bb082f',
+        'F9': 'e67088', 'F10': '8c420c', 'F11': '6f3329', 'F12': 'f9425e',
+        'F13': 'd14b30', 'F14': 'fdaca9', 'F15': 'dd0c2c', 'F16': 'fddedc',
+        'F17': 'fbaf9f', 'F18': 'e0804d', 'F19': 'c64b60',
+        
+        'G1': 'fee5c7', 'G2': 'fcceb7', 'G3': 'f9c2a4', 'G4': 'dcb99a',
+        'G5': 'f2a76d', 'G6': 'ee9867', 'G7': '91664e', 'G8': '4d312c',
+        'G9': 'eabb85', 'G10': 'bf9143', 'G11': 'e4c896', 'G12': 'ddb986',
+        'G13': 'd19058', 'G14': '856a54', 'G15': 'f5f3dc', 'G16': 'f2dfce',
+        'G17': '5d5249', 'G18': 'ffedd9', 'G19': 'eca450', 'G20': 'b0623e',
+        'G21': 'cb906e',
+        
+        'H2': 'ffffff', 'H3': 'aeaeae', 'H4': '979296', 'H5': '606060',
+        'H6': '353537', 'H7': '000000', 'H8': 'f7e6f0', 'H9': 'e6e3dc',
+        'H10': 'e5e2f3', 'H11': 'cecdcb', 'H12': 'fff2e2', 'H13': 'ece1cb',
+        'H14': 'c5ced8', 'H15': '9facc7', 'H16': '241d1a', 'H17': 'f6f4f5',
+        'H18': 'fffdf1', 'H19': 'f8f3eb', 'H20': 'a0acb1',
+        
+        'M1': 'ccd7c9', 'M2': '91aa94', 'M3': '718898', 'M4': 'dacec2',
+        'M5': 'dbd6b6', 'M6': 'c8b999', 'M7': 'c1aca7', 'M8': 'b09699',
+        'M9': 'ab9787', 'M10': 'bb9fb9', 'M11': '9b809f', 'M12': '5a474c',
+        'M13': 'dda89a', 'M14': 'c0725d', 'M15': '86848a',
+    }
+    
+    def __init__(self):
+        """初始化颜色匹配器"""
+        # 预处理调色板，将十六进制转为RGB
+        self.palette_rgb = {}
+        for name, hex_color in self.MARD_PALETTE.items():
+            self.palette_rgb[name] = self._hex_to_rgb(hex_color)
+    
+    @staticmethod
+    def _hex_to_rgb(hex_color: str) -> Tuple[int, int, int]:
+        """将十六进制颜色转换为RGB元组"""
+        hex_color = hex_color.lstrip('#')
+        return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+    
+    @staticmethod
+    def _rgb_to_hex(r: int, g: int, b: int) -> str:
+        """将RGB转换为十六进制颜色"""
+        return f"{r:02x}{g:02x}{b:02x}"
+    
+    @staticmethod
+    def _color_distance(r1: int, g1: int, b1: int, 
+                       r2: int, g2: int, b2: int) -> float:
+        """
+        计算两个RGB颜色之间的感知色差
+        使用加权欧几里得距离公式，考虑人眼对不同颜色的敏感度
+        
+        参考: https://stackoverflow.com/a/9085524
+        """
+        rmean = (r1 + r2) / 2
+        rd = r1 - r2
+        gd = g1 - g2
+        bd = b1 - b2
+        
+        # 加权计算，绿色权重最高，红蓝根据平均红色值动态调整
+        return (((512 + rmean) * rd * rd) / 256 + 
+                4 * gd * gd + 
+                ((767 - rmean) * bd * bd) / 256)
+    
+    @lru_cache(maxsize=1024)
+    def find_closest_color(self, r: int, g: int, b: int) -> Dict[str, any]:
+        """
+        查找最接近的Mard色号
+        
+        Args:
+            r: 红色分量 (0-255)
+            g: 绿色分量 (0-255)
+            b: 蓝色分量 (0-255)
+            
+        Returns:
+            字典包含: {
+                'name': 色号名称 (如 'F5'),
+                'hex': 十六进制颜色值 (如 'ff0000'),
+                'rgb': RGB元组 (255, 0, 0),
+                'distance': 色差值
+            }
+        """
+        min_distance = float('inf')
+        closest_color = None
+        closest_name = None
+        
+        # 遍历调色板找到最小色差
+        for name, (cr, cg, cb) in self.palette_rgb.items():
+            distance = self._color_distance(r, g, b, cr, cg, cb)
+            
+            # 如果完全匹配，直接返回
+            if distance == 0:
+                return {
+                    'name': name,
+                    'hex': self.MARD_PALETTE[name],
+                    'rgb': (cr, cg, cb),
+                    'distance': 0
+                }
+            
+            if distance < min_distance:
+                min_distance = distance
+                closest_color = (cr, cg, cb)
+                closest_name = name
+        
+        return {
+            'name': closest_name,
+            'hex': self.MARD_PALETTE[closest_name],
+            'rgb': closest_color,
+            'distance': min_distance
+        }
+    
+    def find_closest_color_from_hex(self, hex_color: str) -> Dict[str, any]:
+        """
+        从十六进制颜色查找最接近的Mard色号
+        
+        Args:
+            hex_color: 十六进制颜色，如 '#FF0000' 或 'FF0000'
+            
+        Returns:
+            与find_closest_color相同的字典
+        """
+        r, g, b = self._hex_to_rgb(hex_color)
+        return self.find_closest_color(r, g, b)
+    
+    def convert_image_colors(self, image_rgb_array) -> list:
+        """
+        转换整个图像的颜色到Mard色号
+        
+        Args:
+            image_rgb_array: 图像的RGB数组 (高度 x 宽度 x 3)
+            
+        Returns:
+            色号名称的二维数组
+        """
+        import numpy as np
+        
+        if not isinstance(image_rgb_array, np.ndarray):
+            image_rgb_array = np.array(image_rgb_array)
+        
+        height, width = image_rgb_array.shape[:2]
+        result = []
+        
+        for y in range(height):
+            row = []
+            for x in range(width):
+                r, g, b = image_rgb_array[y, x, :3]
+                color_info = self.find_closest_color(int(r), int(g), int(b))
+                row.append(color_info['name'])
+            result.append(row)
+        
+        return result
+    
+    def get_color_statistics(self, color_names: list) -> Dict[str, int]:
+        """
+        统计色号使用数量
+        
+        Args:
+            color_names: 色号名称列表或二维数组
+            
+        Returns:
+            字典 {色号: 数量}，按数量降序排列
+        """
+        from collections import Counter
+        
+        # 如果是二维数组，展平
+        if isinstance(color_names[0], list):
+            flat_list = [name for row in color_names for name in row]
+        else:
+            flat_list = color_names
+        
+        counter = Counter(flat_list)
+        # 按数量降序排序
+        return dict(sorted(counter.items(), key=lambda x: x[1], reverse=True))
