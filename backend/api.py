@@ -127,42 +127,6 @@ def calculate_color_stats(pixel_img):
         item['percentage'] = f"{(item['count'] / total_pixels * 100):.1f}%"
     
     return stats
-    
-    # 匹配每个颜色到最接近的拼豆色
-    color_map = {}
-    for color, count in zip(unique_colors, unique_counts):
-        rgb_array = np.uint8([[color]])
-        lab = cv2.cvtColor(rgb_array, cv2.COLOR_RGB2LAB)[0][0]
-        
-        min_dist = float('inf')
-        best_bead = None
-        for bead in bead_data:
-            dist = np.sqrt(np.sum((lab.astype(float) - bead['lab'].astype(float)) ** 2))
-            if dist < min_dist:
-                min_dist = dist
-                best_bead = bead
-        
-        if best_bead:
-            key = best_bead['code']
-            if key in color_map:
-                color_map[key]['count'] += int(count)
-            else:
-                color_map[key] = {
-                'code': best_bead['code'],
-                'name': best_bead['name'],
-                'hex': best_bead['hex'],
-                'count': int(count)  # ← 转换为 Python int
-            }
-    
-    # 转换为列表并排序
-    stats = list(color_map.values())
-    stats.sort(key=lambda x: -x['count'])
-    
-    # 添加百分比
-    for item in stats:
-        item['percentage'] = f"{(item['count'] / total_pixels * 100):.1f}%"
-    
-    return stats
 
 # ==================== 登录路由 ====================
 
@@ -496,27 +460,7 @@ def apply_clustering():
             # 按数量排序
             sorted_indices = np.argsort(-unique_counts)
             
-            # 预计算拼豆色表的Lab值用于匹配
-            import cv2
-            bead_data = []
-            for bead in BEAD_COLORS:
-                try:
-                    hex_color = bead['hex'].lstrip('#')
-                    rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-                    bead_data.append({
-                        'code': bead['code'],
-                        'name': bead['name'],
-                        'hex': bead['hex'],
-                        'rgb': rgb
-                    })
-                except:
-                    continue
-            
-            bead_rgbs = np.array([b['rgb'] for b in bead_data], dtype=np.uint8)
-            bead_lab = cv2.cvtColor(bead_rgbs.reshape(1, -1, 3), cv2.COLOR_RGB2LAB)
-            bead_lab = bead_lab.reshape(-1, 3).astype(np.float32)
-            
-            # 创建颜色到色号的映射字典
+            # 创建颜色到色号的映射字典（使用 MardColorMatcher）
             color_to_code = {}
             color_stats = []
             total_beads = w0 * h0
@@ -553,27 +497,7 @@ def apply_clustering():
             
             sorted_indices = np.argsort(-unique_counts)
             
-            # 预计算拼豆色表
-            import cv2
-            bead_data = []
-            for bead in BEAD_COLORS:
-                try:
-                    hex_color = bead['hex'].lstrip('#')
-                    rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-                    bead_data.append({
-                        'code': bead['code'],
-                        'name': bead['name'],
-                        'hex': bead['hex'],
-                        'rgb': rgb
-                    })
-                except:
-                    continue
-            
-            bead_rgbs = np.array([b['rgb'] for b in bead_data], dtype=np.uint8)
-            bead_lab = cv2.cvtColor(bead_rgbs.reshape(1, -1, 3), cv2.COLOR_RGB2LAB)
-            bead_lab = bead_lab.reshape(-1, 3).astype(np.float32)
-            
-            # 创建颜色到色号的映射
+            # 创建颜色到色号的映射（使用 MardColorMatcher）
             color_to_code = {}
             color_stats = []
             total_beads = w0 * h0
@@ -868,7 +792,6 @@ def save_edited_pattern():
         
         # 添加色号标注
         from PIL import ImageDraw, ImageFont
-        import cv2
         
         draw = ImageDraw.Draw(board)
         
@@ -882,24 +805,7 @@ def save_edited_pattern():
             except:
                 font = ImageFont.load_default()
         
-        # 预计算拼豆色表（用于匹配色号）
-        bead_data = []
-        for bead in BEAD_COLORS:
-            try:
-                hex_color = bead['hex'].lstrip('#')
-                rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-                bead_data.append({
-                    'code': bead['code'],
-                    'rgb': rgb
-                })
-            except:
-                continue
-        
-        bead_rgbs = np.array([b['rgb'] for b in bead_data], dtype=np.uint8)
-        bead_lab = cv2.cvtColor(bead_rgbs.reshape(1, -1, 3), cv2.COLOR_RGB2LAB)
-        bead_lab = bead_lab.reshape(-1, 3).astype(np.float32)
-        
-        # 创建颜色到色号的映射并标注
+        # 创建颜色到色号的映射并标注（使用 MardColorMatcher）
         color_to_code = {}
         for y in range(h0):
             for x in range(w0):
@@ -1133,7 +1039,6 @@ def generate_pattern():
         
         # 10. 标注色号
         from PIL import ImageDraw, ImageFont
-        import cv2
         
         draw = ImageDraw.Draw(board)
         
@@ -1147,26 +1052,7 @@ def generate_pattern():
             except:
                 font = ImageFont.load_default()
         
-        # 预计算拼豆色表
-        bead_data = []
-        for bead in BEAD_COLORS:
-            try:
-                hex_color = bead['hex'].lstrip('#')
-                rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
-                bead_data.append({
-                    'code': bead['code'],
-                    'name': bead['name'],
-                    'hex': bead['hex'],
-                    'rgb': rgb
-                })
-            except:
-                continue
-        
-        bead_rgbs = np.array([b['rgb'] for b in bead_data], dtype=np.uint8)
-        bead_lab = cv2.cvtColor(bead_rgbs.reshape(1, -1, 3), cv2.COLOR_RGB2LAB)
-        bead_lab = bead_lab.reshape(-1, 3).astype(np.float32)
-        
-        # 创建颜色映射并标注
+        # 创建颜色映射并标注（使用 MardColorMatcher）
         pixel_arr = np.array(pixel_img)
         color_to_code = {}
         
